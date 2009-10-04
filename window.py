@@ -43,18 +43,24 @@ class taWindow: pass
 #
 def new_window(canvas, path, parent=None):
     tw = taWindow()
-    tw.canvas = canvas
     tw.path = path
     tw.activity = parent
     # starting from command line
     if parent is None:
         tw.sugar = False
+        win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+        win.set_has_frame(True)
+        win.set_decorated(True)
+        tw.canvas = win
         tw.canvas.set_size_request(gtk.gdk.screen_width(), \
                                 gtk.gdk.screen_height())
-        tw.canvas.show_all()
+        tw.canvas.connect("destroy", lambda w: gtk.main_quit())
+        win.show_all()
+
     # starting from Sugar
     else:
         tw.sugar = True
+        tw.canvas = canvas
         parent.show_all()
 
     tw.canvas.set_flags(gtk.CAN_FOCUS)
