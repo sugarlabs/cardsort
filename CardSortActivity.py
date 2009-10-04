@@ -23,25 +23,20 @@ pygtk.require('2.0')
 import gtk
 import gobject
 
-try:
-    import sugar
-
-    from sugar.activity import activity
+import sugar
+from sugar.activity import activity
+try: # 0.86+ toolbar widgets
     from sugar.bundle.activitybundle import ActivityBundle
     from sugar.activity.widgets import ActivityToolbarButton
     from sugar.activity.widgets import StopButton
     from sugar.graphics.toolbarbox import ToolbarBox
     from sugar.graphics.toolbarbox import ToolbarButton
-    from sugar.graphics.toolbutton import ToolButton
-    from sugar.graphics.menuitem import MenuItem
-    from sugar.graphics.icon import Icon
-    from sugar.datastore import datastore
-
-    from sugar import profile
-except:
-    class activity:
-        Activity = None
-
+except ImportError:
+    pass
+from sugar.graphics.toolbutton import ToolButton
+from sugar.graphics.menuitem import MenuItem
+from sugar.graphics.icon import Icon
+from sugar.datastore import datastore
 
 from gettext import gettext as _
 import locale
@@ -105,8 +100,26 @@ class CardSortActivity(activity.Activity):
             self.set_toolbar_box(toolbar_box)
             toolbar_box.show()
 
-        except:
-            pass
+        except NameError:
+            # Use pre-0.86 toolbar design
+            self.toolbox = activity.ActivityToolbox(self)
+            self.set_toolbox(self.toolbox)
+
+            separator = gtk.SeparatorToolItem()
+            separator.props.draw = True
+            separator.set_expand(False)
+            separator.show()
+            self.toolbar.insert(separator, -1)
+
+            # Label for showing status
+            self.results_label = gtk.Label(_("click to rotate; drag to swap"))
+            self.results_label.show()
+            self.results_toolitem = gtk.ToolItem()
+            self.results_toolitem.add(self.results_label)
+            self.toolbox.insert(self.results_toolitem, -1)
+            self.results_toolitem.show()
+
+            self.toolbox.show()
 
         # Create a canvas
         canvas = gtk.DrawingArea()
