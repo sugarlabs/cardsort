@@ -4,13 +4,58 @@
 	<!ENTITY fill_color "#eee">
 ]>
 <svg height="55px" viewBox="0 0 55 55" width="55px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5" stroke="&stroke_color;" fill="&fill_color;">
-  <g transform="matrix(0.35,0,0,0.35,-86,-149)">
-    <path
-      d="M 43.125,0.28125 C 38.752029,0.38960001 34.34065,7.48886 35.75,12.3125 C 36.959209,16.45113 45.59375,25.3125 45.59375,25.3125 L 45.59375,35.3125 L 0.5,35.3125 L 0.5,80.3125 L 15.5,80.3125 C 15.5,80.3125 12.01332,70.308533 20.5,70.3125 C 28.98668,70.31647 25.5,80.312497 25.5,80.3125 C 25.5,80.3125 35.462309,76.883632 35.5,85.28125 C 35.53769,93.67887 25.5,90.281249 25.5,90.28125 C 25.5,90.28125 28.09181,100.43092 20.5,100.28125 C 12.9082,100.13158 15.5,90.281249 15.5,90.28125 L 0.5,90.28125 L 0.5,135.3125 L 45.59375,135.3125 L 45.59375,125.3125 C 45.59375,125.3125 36.959209,116.45113 35.75,112.3125 C 34.34065,107.48886 38.752029,100.3896 43.125,100.28125 C 47.49798,100.17293 50.500001,105.28125 50.5,105.28125 C 50.5,105.28125 53.31129,100.28762 57.90625,100.28125 C 62.50121,100.27488 66.555577,107.45016 65.28125,112.3125 C 64.17038,116.55114 55.437499,125.3125 55.4375,125.3125 L 55.4375,135.3125 L 100.5,135.3125 L 100.5,90.28125 L 115.5,90.28125 C 115.5,90.281249 112.9082,100.13158 120.5,100.28125 C 128.09181,100.43092 125.5,90.28125 125.5,90.28125 C 125.5,90.281249 135.53769,93.67887 135.5,85.28125 C 135.4623,76.883632 125.5,80.3125 125.5,80.3125 C 125.5,80.312497 128.98668,70.31647 120.5,70.3125 C 112.01332,70.308533 115.5,80.3125 115.5,80.3125 L 100.5,80.3125 L 100.5,35.3125 L 55.4375,35.3125 L 55.4375,25.3125 C 55.437499,25.312499 64.17038,16.55114 65.28125,12.3125 C 66.555577,7.4501605 62.50121,0.27488 57.90625,0.28125 C 53.31129,0.28762001 50.5,5.28125 50.5,5.28125 C 50.500001,5.2812498 47.49798,0.17293 43.125,0.28125 z"
-      transform="translate(252.5,430.6)"
-      fill="&fill_color;"
-      stroke="&stroke_color;"
-      stroke-width="8" 
-      />
-  </g>
+  <path
+     d="M 1,54 L 1,1 L 54,1 L 54,54 L 1,54 z"
+     id="path2395"
+     stroke="&stroke_color;"
+     style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  <text
+     x="-41.835938"
+     y="-0.50000381"
+     transform="scale(-1,-1)"
+     id="text3172"
+     xml:space="preserve"
+     fill="&fill_color;"
+     style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"><tspan
+       x="-41.835938"
+       y="-0.50000381"
+       fill="&fill_color;"
+       id="tspan3174">♣</tspan></text>
+  <text
+     x="-41.828125"
+     y="54.5"
+     transform="matrix(0,-1,1,0,0,0)"
+     id="text3176"
+     xml:space="preserve"
+     fill="&fill_color;"
+     style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"><tspan
+       x="-41.828125"
+       y="54.5"
+       fill="&fill_color;"
+       id="tspan3178">♠</tspan></text>
+  <text
+     x="15.839355"
+     y="54.500008"
+     id="text3184"
+     fill="&stroke_color;"
+     xml:space="preserve"
+     style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"><tspan
+       x="15.839355"
+       y="54.500008"
+       id="tspan3186"
+       fill="&stroke_color;"
+       style="font-size:26px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill-opacity:1;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans">♥</tspan></text>
+  <text
+     x="-41.828125"
+     y="23.8125"
+     transform="matrix(0,-1,1,0,0,0)"
+     id="text3189"
+     xml:space="preserve"
+     fill="&stroke_color;"
+     style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"><tspan
+       x="-41.828125"
+       y="23.8125"
+       id="tspan3191"
+       fill="&stroke_color;"
+       style="fill-opacity:1">♦</tspan></text>
 </svg>

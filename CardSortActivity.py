@@ -66,13 +66,14 @@ class CardSortActivity(activity.Activity):
             toolbar_box.toolbar.insert(activity_button, 0)
             activity_button.show()
 
-            # Solver button
-            self.solve_puzzle = ToolButton( "solve-off" )
-            self.solve_puzzle.set_tooltip(_('Solve it'))
-            self.solve_puzzle.props.sensitive = True
-            self.solve_puzzle.connect('clicked', self._solver_cb)
-            toolbar_box.toolbar.insert(self.solve_puzzle, -1)
-            self.solve_puzzle.show()
+            # Blank piece button
+            self.blank_piece = ToolButton( "blank-in" )
+            self.blank_piece.set_tooltip(_('Blank piece'))
+            self.blank_piece.props.sensitive = True
+            self.blank_piece.connect('clicked', self._blank_cb)
+            toolbar_box.toolbar.insert(self.blank_piece, -1)
+            self.blank_piece.show()
+            self.blank = False
 
             separator = gtk.SeparatorToolItem()
             separator.show()
@@ -126,25 +127,22 @@ class CardSortActivity(activity.Activity):
 
 
     #
-    # Solver
+    # Blank piece button callback
     #
-    def _solver_cb(self, button):
-        self.solve_puzzle.set_icon("solve-on")
-
-        """
-        We need to write this code
-        """
-
-
-        """
-        instead, swap in/out blank tile
-        """
+    def _blank_cb(self, button):
+        if self.blank is False:
+            self.blank = True
+            self.blank_piece.set_icon("blank-out")
+            self.blank_piece.set_tooltip(_('Restore piece'))
+            self.results_label.set_text(_("adding blank tile"))
+        else:
+            self.blank = False
+            self.blank_piece.set_icon("blank-in")
+            self.results_label.set_text(_("removing blank tile"))
+            self.blank_piece.set_tooltip(_('Blank piece'))
         self.tw.grid.toggle_blank()
-        self.results_label.set_text(_("toggling in/out blank tile"))
         redrawsprites(self.tw)
-
         self.results_label.show()
-        self.solve_puzzle.set_icon("solve-off")
         return True
 
 
@@ -157,13 +155,14 @@ class ProjectToolbar(gtk.Toolbar):
         gtk.Toolbar.__init__(self)
         self.activity = pc
 
-        # Solver button
-        self.activity.solve_puzzle = ToolButton( "solve-off" )
-        self.activity.solve_puzzle.set_tooltip(_('Solve it'))
-        self.activity.solve_puzzle.props.sensitive = True
-        self.activity.solve_puzzle.connect('clicked', self.activity._solver_cb)
-        self.insert(self.activity.solve_puzzle, -1)
-        self.activity.solve_puzzle.show()
+        # Blank piece button
+        self.activity.blank_piece = ToolButton( "blank-in" )
+        self.activity.blank_piece.set_tooltip(_('Blank it'))
+        self.activity.blank_piece.props.sensitive = True
+        self.activity.blank_piece.connect('clicked', self.activity._blank_cb)
+        self.insert(self.activity.blank_piece, -1)
+        self.activity.blank_piece.show()
+        self.activity.blank = False
 
         separator = gtk.SeparatorToolItem()
         separator.set_draw(True)
