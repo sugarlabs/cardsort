@@ -105,19 +105,8 @@ class CardSortActivity(activity.Activity):
             self.toolbox = activity.ActivityToolbox(self)
             self.set_toolbox(self.toolbox)
 
-            separator = gtk.SeparatorToolItem()
-            separator.props.draw = True
-            separator.set_expand(False)
-            separator.show()
-            self.toolbar.insert(separator, -1)
-
-            # Label for showing status
-            self.results_label = gtk.Label(_("click to rotate; drag to swap"))
-            self.results_label.show()
-            self.results_toolitem = gtk.ToolItem()
-            self.results_toolitem.add(self.results_label)
-            self.toolbox.insert(self.results_toolitem, -1)
-            self.results_toolitem.show()
+            self.projectToolbar = ProjectToolbar(self)
+            self.toolbox.add_toolbar( _('Project'), self.projectToolbar )
 
             self.toolbox.show()
 
@@ -158,3 +147,34 @@ class CardSortActivity(activity.Activity):
         self.solve_puzzle.set_icon("solve-off")
         return True
 
+
+#
+# Project toolbar for pre-0.86 toolbars
+#
+class ProjectToolbar(gtk.Toolbar):
+
+    def __init__(self, pc):
+        gtk.Toolbar.__init__(self)
+        self.activity = pc
+
+        # Solver button
+        self.activity.solve_puzzle = ToolButton( "solve-off" )
+        self.activity.solve_puzzle.set_tooltip(_('Solve it'))
+        self.activity.solve_puzzle.props.sensitive = True
+        self.activity.solve_puzzle.connect('clicked', self.activity._solver_cb)
+        self.insert(self.activity.solve_puzzle, -1)
+        self.activity.solve_puzzle.show()
+
+        separator = gtk.SeparatorToolItem()
+        separator.set_draw(True)
+        self.insert(separator, -1)
+        separator.show()
+
+        # Label for showing status
+        self.activity.results_label = gtk.Label(\
+            _("click to rotate; drag to swap"))
+        self.activity.results_label.show()
+        self.activity.results_toolitem = gtk.ToolItem()
+        self.activity.results_toolitem.add(self.activity.results_label)
+        self.insert(self.activity.results_toolitem, -1)
+        self.activity.results_toolitem.show()

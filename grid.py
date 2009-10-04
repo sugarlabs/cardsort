@@ -36,9 +36,10 @@ CARD_DEFS = ((1,3,-2,-3),(2,3,-3,-2),(2,3,-4,-4),\
 # class for defining 3x3 matrix of cards
 #
 class Grid:
-    # 123
-    # 456
-    # 789
+    # 012
+    # 345
+    # 678
+    # 9 is an extra (blank) card that matches everything
     def __init__(self,tw):
         self.grid = [0,1,2,3,4,5,6,7,8,9]
         self.card_table = {}
@@ -57,9 +58,12 @@ class Grid:
             if i == 9: # put the extra (blank) card off the screen
                 y = tw.height
 
+    # swap in/out the blank card
     def toggle_blank(self):
         self.swap(6,9)
 
+    # swap card a and card b
+    # swap their entries in the grid and the position of their sprites
     def swap(self,a,b):
         # swap grid elements and x,y positions of sprites
         # print "swapping cards " + str(a) + " and " + str(b)
@@ -74,12 +78,15 @@ class Grid:
         self.card_table[b].spr.x = x
         self.card_table[b].spr.y = y
 
+    # print the grid
     def print_grid(self):
-        print self.grid
+        print self.grid[0:2]
+        print self.grid[3:5]
+        print self.grid[6:8]
         return
 
+    # test all relevant borders, ignoring borders on the blank card
     def test(self):
-        # self.print_grid()
         for i in (0,1,3,4,6,7):
             if self.card_table[self.grid[i]].east != 0 and \
                self.card_table[self.grid[i+1]].west != 0 and \
