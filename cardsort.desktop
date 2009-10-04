@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=CardSort
+GenericName=Sugar CardSort activity
+Exec=/usr/share/sugar/activities/CardSort.activity/cardsort.py
+Type=Application
+Comment=A matching puzzle game
+Terminal=false
+StartupNotify=true
+Categories=Games;
