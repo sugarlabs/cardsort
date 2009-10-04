@@ -133,9 +133,9 @@ def draw_label(spr, label, myscale, center_flag, truncate_flag):
         mylabel = label.replace("\0"," ")
         l = len(mylabel)
         if truncate_flag and l > 8:
-            pl = spr.tw.window.create_pango_layout("..."+mylabel[l-8:])
+            pl = spr.tw.canvas.create_pango_layout("..."+mylabel[l-8:])
         else:
-            pl = spr.tw.window.create_pango_layout(mylabel)
+            pl = spr.tw.canvas.create_pango_layout(mylabel)
         pl.set_font_description(fd)
         if center_flag:
             swidth = pl.get_size()[0]/pango.SCALE
@@ -153,9 +153,9 @@ def draw_label(spr, label, myscale, center_flag, truncate_flag):
 
 # used for most things
 def draw_label1(spr, label):
-    draw_label(spr, label, 7, True, True)
+    draw_label(spr, label, 12, True, True)
 
 # used for status blocks
 def draw_label2(spr, label):
-    draw_label(spr, str(label), 9, False, False)
+    draw_label(spr, str(label), 14, False, False)
 
