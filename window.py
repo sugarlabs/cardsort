@@ -45,17 +45,18 @@ def new_window(canvas, path, parent=None):
     tw = taWindow()
     tw.path = path
     tw.activity = parent
+
     # starting from command line
     if parent is None:
         tw.sugar = False
-        win = gtk.Window(gtk.WINDOW_TOPLEVEL)
-        win.set_has_frame(True)
-        win.set_decorated(True)
-        tw.canvas = win
-        tw.canvas.set_size_request(gtk.gdk.screen_width(), \
-                                gtk.gdk.screen_height())
+        tw.canvas = gtk.Window(gtk.WINDOW_TOPLEVEL)
+        tw.canvas.set_decorated(True)
+        tw.canvas.set_title(_("CardSort") + ": " + \
+                            _("click to rotate; drag to swap"))
         tw.canvas.connect("destroy", lambda w: gtk.main_quit())
-        win.show_all()
+        tw.canvas.set_size_request(gtk.gdk.screen_width(), \
+                                   gtk.gdk.screen_height())
+        tw.canvas.show_all()
 
     # starting from Sugar
     else:
@@ -89,7 +90,6 @@ def new_window(canvas, path, parent=None):
     tw.start_drag = [0,0]
 
     return tw
-
 
 #
 # Button press
@@ -135,13 +135,19 @@ def _button_release_cb(win, event, tw):
     redrawsprites(tw)
     tw.press = -1
     tw.release = -1
-    if tw.sugar is True:
-        if tw.grid.test() == True:
+    if tw.grid.test() == True:
+        if tw.sugar is True:
             tw.activity.results_label.set_text(_("You solved the puzzle."))
             tw.activity.results_label.show()
         else:
+            tw.canvas.set_title(_("CardSort") + ": " + \
+                                _("You solved the puzzle."))
+    else:
+        if tw.sugar is True:
             tw.activity.results_label.set_text(_("Keep trying."))
             tw.activity.results_label.show()
+        else:
+            tw.canvas.set_title(_("CardSort") + ": " + _("Keep trying."))
     return True
 
 #
