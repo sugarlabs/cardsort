@@ -47,16 +47,10 @@ def new_window(canvas, path, parent=None):
     tw.activity = parent
 
     # starting from command line
+    # we have to do all the work that was done in CardSortActivity.py
     if parent is None:
         tw.sugar = False
-        tw.canvas = gtk.Window(gtk.WINDOW_TOPLEVEL)
-        tw.canvas.set_decorated(True)
-        tw.canvas.set_title(_("CardSort") + ": " + \
-                            _("click to rotate; drag to swap"))
-        tw.canvas.connect("destroy", lambda w: gtk.main_quit())
-        tw.canvas.set_size_request(gtk.gdk.screen_width(), \
-                                   gtk.gdk.screen_height())
-        tw.canvas.show_all()
+        tw.canvas = canvas
 
     # starting from Sugar
     else:
@@ -72,7 +66,6 @@ def new_window(canvas, path, parent=None):
     tw.canvas.connect("button-release-event", _button_release_cb, tw)
     tw.width = gtk.gdk.screen_width()
     tw.height = gtk.gdk.screen_height()-GRID_CELL_SIZE
-    # scale to fill 80% of screen height
     tw.card_dim = CARD_DIM
     tw.scale = 0.8 * tw.height/(tw.card_dim*3)
     tw.area = tw.canvas.window
@@ -140,14 +133,14 @@ def _button_release_cb(win, event, tw):
             tw.activity.results_label.set_text(_("You solved the puzzle."))
             tw.activity.results_label.show()
         else:
-            tw.canvas.set_title(_("CardSort") + ": " + \
+            tw.win.set_title(_("CardSort") + ": " + \
                                 _("You solved the puzzle."))
     else:
         if tw.sugar is True:
             tw.activity.results_label.set_text(_("Keep trying."))
             tw.activity.results_label.show()
         else:
-            tw.canvas.set_title(_("CardSort") + ": " + _("Keep trying."))
+            tw.win.set_title(_("CardSort") + ": " + _("Keep trying."))
     return True
 
 #
@@ -165,3 +158,13 @@ def distance(start,stop):
 def _expose_cb(win, event, tw):
     redrawsprites(tw)
     return True
+
+#
+# callbacks
+#
+def _toggle_cb(win, event, tw):
+    self.tw.grid.toggle_blank()
+    redrawsprites(self.tw)
+
+def _destroy_cb(win, event, tw):
+    gtk.main_quit()
