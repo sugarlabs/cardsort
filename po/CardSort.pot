@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-04 19:33+0000\n"
+"POT-Creation-Date: 2009-10-06 00:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,6 +27,7 @@ msgstr ""
 
 #: /home/walter/Desktop/cardsort/CardSortActivity.py:83
 #: /home/walter/Desktop/cardsort/CardSortActivity.py:174
+#: /home/walter/Desktop/cardsort/cardsort.py:44
 msgid "click to rotate; drag to swap"
 msgstr ""
 
@@ -50,10 +51,22 @@ msgstr ""
 msgid "Blank it"
 msgstr ""
 
-#: /home/walter/Desktop/cardsort/window.py:140
+#: /home/walter/Desktop/cardsort/window.py:133
+#: /home/walter/Desktop/cardsort/window.py:137
 msgid "You solved the puzzle."
 msgstr ""
 
+#: /home/walter/Desktop/cardsort/window.py:136
+#: /home/walter/Desktop/cardsort/window.py:143
+#: /home/walter/Desktop/cardsort/cardsort.py:43
+msgid "CardSort"
+msgstr ""
+
+#: /home/walter/Desktop/cardsort/window.py:140
 #: /home/walter/Desktop/cardsort/window.py:143
 msgid "Keep trying."
+msgstr ""
+
+#: /home/walter/Desktop/cardsort/cardsort.py:48
+msgid "Toggle blank card"
 msgstr ""
