@@ -39,7 +39,7 @@ class Card:
         self.east = c[1]
         self.south = c[2]
         self.west = c[3]
-        self.rotate = 0
+        self.orientation = 0
         # create sprite from svg file
         self.spr = sprNew(tw, x, y,\
                           self.load_image(tw.path,i,tw.card_dim*tw.scale))
@@ -57,6 +57,10 @@ class Card:
                                                          '.svg'), \
                                                     int(wh), int(wh))
 
+    def set_orientation(self,r):
+        while r != self.orientation:
+            self.rotate_ccw()
+
     def rotate_ccw(self):
         # print "rotating card " + str(self.spr.label)
         tmp = self.north
@@ -64,9 +68,9 @@ class Card:
         self.east = self.south
         self.south = self.west
         self.west = tmp
-        self.rotate += 90
-        if self.rotate > 359:
-            self.rotate -= 360
+        self.orientation += 90
+        if self.orientation > 359:
+            self.orientation -= 360
         tmp = self.spr.image.rotate_simple(90)
         self.spr.image = tmp
 

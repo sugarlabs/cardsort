@@ -29,17 +29,20 @@ import os.path
 
 import window
 import grid
+import card
 import sprites
+from orientation import get_rotation_sets
 
 class CardSortMain:
     def __init__(self):
+        self.r = 0
         self.tw = None
         # create a new window
         self.win = gtk.Window(gtk.WINDOW_TOPLEVEL)
         # for some reason, full screen width/height doesn't work
         self.win.set_size_request(
-                                  int(gtk.gdk.screen_width()*.9), \
-                                  int(gtk.gdk.screen_height()*.9))
+                                  int(gtk.gdk.screen_width()-32), \
+                                  int(gtk.gdk.screen_height()-32))
         self.win.set_title(_("CardSort") + ": " + \
                            _("click to rotate; drag to swap"))
         self.win.connect("delete_event", lambda w,e: gtk.main_quit())
@@ -48,6 +51,9 @@ class CardSortMain:
         menu_items = gtk.MenuItem(_("Toggle blank card"))
         menu.append(menu_items)
         menu_items.connect("activate", self._toggle_card_cb)
+        menu_items = gtk.MenuItem(_("Apply rotation sets"))
+        menu.append(menu_items)
+        menu_items.connect("activate", self._apply_rotation_sets_cb)
         menu_items.show()
         root_menu = gtk.MenuItem("Tools")
         root_menu.show()
@@ -82,6 +88,17 @@ class CardSortMain:
     def _toggle_card_cb(self, widget):
         self.tw.grid.toggle_blank()
         sprites.redrawsprites(self.tw)
+
+    def _apply_rotation_sets_cb(self, widget):
+        rotation_sets = get_rotation_sets()
+        i = self.r
+        for j in range(9):
+            self.tw.grid.card_table[self.tw.grid.grid.index(j)]\
+                                   .set_orientation(rotation_sets[i][j])
+        sprites.redrawsprites(self.tw)
+        self.r += 1
+        if self.r == 64:
+            self.r = 0
 
 def main():
     gtk.main()
