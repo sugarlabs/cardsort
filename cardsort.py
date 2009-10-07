@@ -54,6 +54,9 @@ class CardSortMain:
         menu_items = gtk.MenuItem(_("Apply rotation sets"))
         menu.append(menu_items)
         menu_items.connect("activate", self._apply_rotation_sets_cb)
+        menu_items = gtk.MenuItem(_("Solve it"))
+        menu.append(menu_items)
+        menu_items.connect("activate", self._solve_cb)
         menu_items.show()
         root_menu = gtk.MenuItem("Tools")
         root_menu.show()
@@ -99,6 +102,39 @@ class CardSortMain:
         self.r += 1
         if self.r == 64:
             self.r = 0
+
+    def _solve_cb(self, widget):
+        rotation_sets = get_rotation_sets()
+
+        for i in range(9):
+            for j in range(9):
+                if j in [i]: continue
+                for k in range(9):
+                    if k in [i,j]: continue
+                    for x in range(9):
+                        if x in [i,j,k]: continue
+                        for y in range(9):
+                            if y in [x,i,j,k]: continue
+                            for z in range(9):
+                                if z in [x,y,i,j,k]: continue
+                                for a in range(9):
+                                    if a in [x,y,z,i,j,k]: continue
+                                    for b in range(9):
+                                        if b in [a,x,y,z,i,j,k]: continue
+                                        for c in range(9):
+                                            if c in [a,b,x,y,z,i,j,k]:
+                                                continue
+                                            self.tw.grid.grid = [i,j,k,x,y,z,a,b,c]
+                                            for o in range(64):
+                                                 for j in range(9):
+                                                     self.tw.grid.card_table[self.tw.grid.grid.index(j)].set_orientation(rotation_sets[o][j])
+                                                     if self.tw.grid.test() is True:
+                                                         sprites.redrawsprites(self.tw)
+                                                         print self.tw.grid
+                                                         print o
+                                                         return True
+        print "no solution found :("
+        return True
 
 def main():
     gtk.main()
