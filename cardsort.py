@@ -41,9 +41,9 @@ class CardSortMain:
         self.win = gtk.Window(gtk.WINDOW_TOPLEVEL)
         # for some reason, full screen width/height doesn't work
         self.win.set_size_request(
-                                  int(gtk.gdk.screen_width()-32), \
+                                  int(gtk.gdk.screen_width()-32), 
                                   int(gtk.gdk.screen_height()-32))
-        self.win.set_title(_("CardSort") + ": " + \
+        self.win.set_title(_("CardSort") + ": " + 
                            _("click to rotate; drag to swap"))
         self.win.connect("delete_event", lambda w,e: gtk.main_quit())
 
@@ -105,6 +105,7 @@ class CardSortMain:
 
     def _solve_cb(self, widget):
         rotation_sets = get_rotation_sets()
+        counter = 0
 
         for i in range(9):
             for j in range(9):
@@ -122,16 +123,20 @@ class CardSortMain:
                                     for b in range(9):
                                         if b in [a,x,y,z,i,j,k]: continue
                                         for c in range(9):
-                                            if c in [a,b,x,y,z,i,j,k]:
-                                                continue
+                                            if c in [a,b,x,y,z,i,j,k]: continue
                                             self.tw.grid.grid = [i,j,k,x,y,z,a,b,c]
+                                            counter += 1
+                                            if (counter/1000)*1000 == counter:
+                                                print counter
                                             for o in range(64):
                                                  for j in range(9):
-                                                     self.tw.grid.card_table[self.tw.grid.grid.index(j)].set_orientation(rotation_sets[o][j])
+                                                     self.tw.grid.card_table[self.tw.grid.grid.index(j)].set_orientation(rotation_sets[o][j],False)
                                                      if self.tw.grid.test() is True:
+                                                         self.tw.grid.card_table[self.tw.grid.grid.index(j)].set_orientation(rotation_sets[o][j],True)
                                                          sprites.redrawsprites(self.tw)
                                                          print self.tw.grid
-                                                         print o
+                                                         print rotation_sets[o]
+                                                         self.tw.win.set_title(_("CardSort") + ": " + _("You solved the puzzle."))
                                                          return True
         print "no solution found :("
         return True

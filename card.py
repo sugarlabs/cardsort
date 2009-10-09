@@ -57,11 +57,11 @@ class Card:
                                                          '.svg'), \
                                                     int(wh), int(wh))
 
-    def set_orientation(self,r):
+    def set_orientation(self,r,rotate_spr=True):
         while r != self.orientation:
-            self.rotate_ccw()
+            self.rotate_ccw(rotate_spr)
 
-    def rotate_ccw(self):
+    def rotate_ccw(self,rotate_spr=True):
         # print "rotating card " + str(self.spr.label)
         tmp = self.north
         self.north = self.east
@@ -71,8 +71,9 @@ class Card:
         self.orientation += 90
         if self.orientation > 359:
             self.orientation -= 360
-        tmp = self.spr.image.rotate_simple(90)
-        self.spr.image = tmp
+        if rotate_spr is True:
+            tmp = self.spr.image.rotate_simple(90)
+            self.spr.image = tmp
 
     def print_card(self):
         print "(" + str(self.north) + "," + str(self.east) + \
