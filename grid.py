@@ -60,7 +60,7 @@ class Grid:
 
     # swap in/out the blank card
     def toggle_blank(self):
-        self.swap(6,9)
+        self.swap(3,9)
 
     # swap card a and card b
     # swap their entries in the grid and the position of their sprites

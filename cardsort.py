@@ -96,8 +96,13 @@ class CardSortMain:
         rotation_sets = get_rotation_sets()
         i = self.r
         for j in range(9):
-            self.tw.grid.card_table[self.tw.grid.grid.index(j)]\
-                                   .set_orientation(rotation_sets[i][j])
+            # if the blank card (9) is in the grid,
+            # then the index for the card it replaced will fail
+            try: 
+                self.tw.grid.card_table[self.tw.grid.grid.index(j)]\
+                                       .set_orientation(rotation_sets[i][j])
+            except ValueError:
+                pass
         sprites.redrawsprites(self.tw)
         self.r += 1
         if self.r == 64:
@@ -127,18 +132,27 @@ class CardSortMain:
                                             self.tw.grid.grid = [i,j,k,x,y,z,a,b,c]
                                             counter += 1
                                             if (counter/1000)*1000 == counter:
-                                                print counter
+                                                print str(counter) + ": " + str(self.tw.grid.grid)
                                             for o in range(64):
-                                                 for j in range(9):
-                                                     self.tw.grid.card_table[self.tw.grid.grid.index(j)].set_orientation(rotation_sets[o][j],False)
+                                                 for r in range(9):
+                                                     try:
+                                                         self.tw.grid.card_table[self.tw.grid.grid.index(r)].set_orientation(rotation_sets[o][r],False)
+                                                     except:
+                                                         pass
                                                      if self.tw.grid.test() is True:
-                                                         self.tw.grid.card_table[self.tw.grid.grid.index(j)].set_orientation(rotation_sets[o][j],True)
+                                                         print "eureka"
+                                                         try:
+                                                             self.tw.grid.card_table[self.tw.grid.grid.index(r)].set_orientation(rotation_sets[o][r],True)
+                                                         except:
+                                                             print "print index error with: " + str(r)
                                                          sprites.redrawsprites(self.tw)
-                                                         print self.tw.grid
+                                                         print self.tw.grid.grid
+                                                         print o
                                                          print rotation_sets[o]
                                                          self.tw.win.set_title(_("CardSort") + ": " + _("You solved the puzzle."))
                                                          return True
         print "no solution found :("
+        print self.tw.grid.grid
         return True
 
 def main():
