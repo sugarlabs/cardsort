@@ -72,7 +72,7 @@ class CardSortMain:
         vbox.pack_end(canvas, True, True)
         canvas.show()
 
-        menu_bar.append (root_menu)
+        menu_bar.append(root_menu)
         self.win.show_all()
 
         # Join the activity
@@ -104,6 +104,15 @@ class CardSortMain:
         self.r += 1
         if self.r == 64:
             self.r = 0
+
+    def _solve_cb_x(self, widget):
+        self.tw.grid.set_grid([8,7,6,5,4,3,2,1,0,9])
+        self.tw.grid.print_grid()
+
+        self.tw.grid.set_orientation([0,90,180,270,0,90,180,270,0,90])
+        self.tw.grid.print_orientations()
+        sprites.redrawsprites(self.tw)
+        return True
 
     def _solve_cb(self, widget):
         self.rotation_sets = get_rotation_sets()
@@ -146,25 +155,8 @@ class CardSortMain:
                 self.tw.grid.print_orientations()
                 self.tw.win.set_title(_("CardSort") + ": " + \
                                       _("You solved the puzzle."))
-                for r in range(9):
-                    # since we were not actually updating the graphics,
-                    # we need to do it now
-                    x = int((self.tw.width-\
-                            (self.tw.card_dim*3*self.tw.scale))/2)
-                    y = int((self.tw.height-\
-                            (self.tw.card_dim*3*self.tw.scale))/2)
-                    self.tw.grid.card_table[self.tw.grid.grid.index(r)].spr.x = x
-                    self.tw.grid.card_table[self.tw.grid.grid.index(r)].spr.y = y
-                    print str(r) + ": " + str(self.tw.grid.grid.index(r))
-                    x += int(self.tw.card_dim*self.tw.scale)
-                    if x > (self.tw.width+(self.tw.card_dim*2*self.tw.scale))/2:
-                        x = int((self.tw.width-\
-                                (self.tw.card_dim*3*self.tw.scale))/2)
-                        y += int(self.tw.card_dim*self.tw.scale)
-
-                    self.tw.grid.card_table[self.tw.grid.grid.index(r)]\
-                        .set_orientation(self.rotation_sets[o][r],True)
-
+                self.tw.grid.set_grid(g)
+                self.tw.grid.set_orientation(self.rotation_sets[o])
                 self.tw.grid.print_grid()
                 self.tw.grid.print_orientations()
                 sprites.redrawsprites(self.tw)

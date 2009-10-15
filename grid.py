@@ -26,9 +26,9 @@ import gobject
 from sprites import *
 from card import *
 
-CARD_DEFS = ((1,3,-2,-3),(2,3,-3,-2),(2,3,-4,-4),\
-             (2,1,-1,-4),(3,4,-4,-3),(4,2,-1,-2),\
-             (1,1,-2,-4),(4,2,-3,-4),(1,3,-1,-2),\
+CARD_DEFS = ((1,3,-2,-3),(2,3,-3,-2),(2,3,-4,-4),
+             (2,1,-1,-4),(3,4,-4,-3),(4,2,-1,-2),
+             (1,1,-2,-4),(4,2,-3,-4),(1,3,-1,-2),
              (0,0,0,0))
 
 
@@ -43,28 +43,55 @@ class Grid:
     def __init__(self,tw):
         self.grid = [0,1,2,3,4,5,6,7,8,9]
         self.card_table = {}
+        # stuff to keep around for the graphics
+        self.w = tw.width
+        self.h = tw.height
+        self.d = tw.card_dim
+        self.s = tw.scale
         # Initialize the cards
-        i = 0
-        x = int((tw.width-(tw.card_dim*3*tw.scale))/2)
-        y = int((tw.height-(tw.card_dim*3*tw.scale))/2)
+        i = 0 # i is used as a label on the sprite
+        x = int((self.w-(self.d*3*self.s))/2)
+        y = int((self.h-(self.d*3*self.s))/2)
         for c in CARD_DEFS:
             self.card_table[i] = Card(tw,c,i,x,y)
             self.card_table[i].draw_card()
-            x += int(tw.card_dim*tw.scale)
-            if x > (tw.width+(tw.card_dim*2*tw.scale))/2:
-                x = int((tw.width-(tw.card_dim*3*tw.scale))/2)
-                y += int(tw.card_dim*tw.scale)
+            x += int(self.d*self.s)
+            if x > (self.w+(self.d*2*self.s))/2:
+                x = int((self.w-(self.d*3*self.s))/2)
+                y += int(self.d*self.s)
             i += 1
             if i == 9: # put the extra (blank) card off the screen
-                y = tw.height
+                y = self.h
+
+    # force a specific layout
+    def set_grid(self,newgrid):
+        x = int((self.w-(self.d*3*self.s))/2)
+        y = int((self.h-(self.d*3*self.s))/2)
+        for c in newgrid:
+            for i in range(9):
+                if self.card_table[i].spr.label == c:
+                    self.card_table[i].spr.x = x
+                    self.card_table[i].spr.y = y
+                    self.card_table[i].draw_card()
+            x += int(self.d*self.s)
+            if x > (self.w+(self.d*2*self.s))/2:
+                x = int((self.w-(self.d*3*self.s))/2)
+                y += int(self.d*self.s)
+
+    def set_orientation(self,neworientation):
+        for c in range(9):
+            self.card_table[c].set_orientation(neworientation[c])
+            self.card_table[c].draw_card()
 
     # swap in/out the blank card
     def toggle_blank(self):
-        self.swap(3,9)
+        self.swap(5,9)
 
     # swap card a and card b
     # swap their entries in the grid and the position of their sprites
     def swap(self,a,b):
+        self.print_grid()
+        print a, b
         # swap grid elements and x,y positions of sprites
         # print "swapping cards " + str(a) + " and " + str(b)
         ai = self.grid.index(a)
@@ -80,9 +107,22 @@ class Grid:
 
     # print the grid
     def print_grid(self):
-        print self.grid[0:2]
-        print self.grid[3:5]
-        print self.grid[6:8]
+        print self.grid[0:3]
+        print self.grid[3:6]
+        print self.grid[6:9]
+        return
+
+    # print the grid orientations
+    def print_orientations(self):
+        print self.card_table[self.grid[0]].orientation,\
+              self.card_table[self.grid[1]].orientation,\
+              self.card_table[self.grid[2]].orientation 
+        print self.card_table[self.grid[3]].orientation,\
+              self.card_table[self.grid[4]].orientation,\
+              self.card_table[self.grid[5]].orientation 
+        print self.card_table[self.grid[6]].orientation,\
+              self.card_table[self.grid[7]].orientation,\
+              self.card_table[self.grid[8]].orientation 
         return
 
     # test all relevant borders, ignoring borders on the blank card
