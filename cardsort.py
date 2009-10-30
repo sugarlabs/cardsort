@@ -117,29 +117,13 @@ class CardSortMain:
     def _solve_cb(self, widget):
         self.rotation_sets = get_rotation_sets()
         counter = 0
-        for i in range(9):
-            for j in range(9):
-                if j in [i]: continue
-                for k in range(9):
-                    if k in [i,j]: continue
-                    for x in range(9):
-                        if x in [i,j,k]: continue
-                        for y in range(9):
-                            if y in [x,i,j,k]: continue
-                            for z in range(9):
-                                if z in [x,y,i,j,k]: continue
-                                for a in range(9):
-                                    if a in [x,y,z,i,j,k]: continue
-                                    for b in range(9):
-                                        if b in [a,x,y,z,i,j,k]: continue
-                                        for c in range(9):
-                                            if c in [a,b,x,y,z,i,j,k]: continue
-                                            if self.test([i,j,k,x,y,z,a,b,c,9])\
-                                                is True: return True
-                                            counter += 1
-                                            if (counter/1000)*1000 == counter:
-                                                print str(counter) + ": " + \
-                                                      str(self.tw.grid.grid)
+        a = [0,1,2,3,4,5,6,7,8]
+        for i in Permutation(a):
+            if self.test(i) is True:
+                return True
+            counter += 1
+            if (counter/1000)*1000 == counter:
+                print str(counter) + ": " + str(self.tw.grid.grid)
         print "no solution found :("
         return True
 
@@ -162,6 +146,37 @@ class CardSortMain:
                 sprites.redrawsprites(self.tw)
                 return True
         return False
+"""
+def permute(inputData, outputSoFar): 
+    for elem in inputData: 
+        if elem not in outputSoFar: 
+            outputSoFar.append(elem) 
+            if len(outputSoFar) == len(inputData): 
+                print outputSoFar 
+            else: 
+                permute(inputData, outputSoFar) # --- Recursion  
+            outputSoFar.pop() 
+
+permute([0,1,2,3,4,5,6,7,8], []) 
+"""
+
+class Permutation: 
+    def __init__(self, justalist): 
+        self._data = justalist[:] 
+        self._sofar = [] 
+    def __iter__(self): 
+        return self.next() 
+    def next(self): 
+         for elem in self._data: 
+             if elem not in self._sofar: 
+                 self._sofar.append(elem) 
+                 if len(self._sofar) == len(self._data): 
+                     yield self._sofar[:] 
+                 else: 
+                     for v in self.next(): 
+                         yield v 
+                 self._sofar.pop() 
+
 
 def main():
     gtk.main()
