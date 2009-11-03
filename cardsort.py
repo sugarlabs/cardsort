@@ -139,8 +139,11 @@ class CardSortMain:
                 self.tw.grid.print_orientations()
                 self.tw.win.set_title(_("CardSort") + ": " + \
                                       _("You solved the puzzle."))
+                self.tw.grid.reset(self.tw)
                 self.tw.grid.set_grid(g)
-                self.tw.grid.set_orientation(self.rotation_sets[o])
+                for r in range(9):
+                    self.tw.grid.card_table[self.tw.grid.grid.index(r)]\
+                        .set_orientation(self.rotation_sets[o][r],True)
                 self.tw.grid.print_grid()
                 self.tw.grid.print_orientations()
                 sprites.redrawsprites(self.tw)
