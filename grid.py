@@ -40,7 +40,7 @@ class Grid:
     # 345
     # 678
     # 9 is an extra (blank) card that matches everything
-    def __init__(self,tw):
+    def __init__(self, tw):
         self.grid = [0,1,2,3,4,5,6,7,8,9]
         self.card_table = {}
         # stuff to keep around for the graphics
@@ -63,8 +63,15 @@ class Grid:
             if i == 9: # put the extra (blank) card off the screen
                 y = self.h
 
+    # reset everything to initial layout
+    def reset(self, tw):
+        self.set_grid([0,1,2,3,4,5,6,7,8,9])
+        self.set_orientation([0,0,0,0,0,0,0,0,0,0])
+        for i in range(9):
+            self.card_table[i].reload_image(tw, i)
+
     # force a specific layout
-    def set_grid(self,newgrid):
+    def set_grid(self, newgrid):
         x = int((self.w-(self.d*3*self.s))/2)
         y = int((self.h-(self.d*3*self.s))/2)
         for c in newgrid:
@@ -78,9 +85,9 @@ class Grid:
                 x = int((self.w-(self.d*3*self.s))/2)
                 y += int(self.d*self.s)
 
-    def set_orientation(self,neworientation):
+    def set_orientation(self, neworientation):
         for c in range(9):
-            self.card_table[c].set_orientation(neworientation[c])
+            self.card_table[c].set_orientation(neworientation[c],True)
             self.card_table[c].draw_card()
 
     # swap in/out the blank card
@@ -89,7 +96,7 @@ class Grid:
 
     # swap card a and card b
     # swap their entries in the grid and the position of their sprites
-    def swap(self,a,b):
+    def swap(self, a, b):
         self.print_grid()
         print a, b
         # swap grid elements and x,y positions of sprites

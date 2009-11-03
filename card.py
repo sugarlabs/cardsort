@@ -50,12 +50,13 @@ class Card:
         draw(self.spr)
 
     def load_image(self, file, i, wh):
-        # print "loading " + os.path.join(file + str(i) + '.svg') + \
-        #       " scale: " + str(wh)
         return gtk.gdk.pixbuf_new_from_file_at_size(os.path.join(file + \
                                                          str(i) + "x" + \
                                                          '.svg'), \
                                                     int(wh), int(wh))
+
+    def reload_image(self, tw, i):
+        self.spr.image = self.load_image(tw.path,i,tw.card_dim*tw.scale)
 
     def set_orientation(self,r,rotate_spr=True):
         while r != self.orientation:
