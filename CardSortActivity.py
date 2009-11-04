@@ -66,14 +66,37 @@ class CardSortActivity(activity.Activity):
             toolbar_box.toolbar.insert(activity_button, 0)
             activity_button.show()
 
-            # Blank piece button
-            self.blank_piece = ToolButton( "blank-in" )
-            self.blank_piece.set_tooltip(_('Blank piece'))
-            self.blank_piece.props.sensitive = True
-            self.blank_piece.connect('clicked', self._blank_cb)
-            toolbar_box.toolbar.insert(self.blank_piece, -1)
-            self.blank_piece.show()
-            self.blank = False
+            # 2x2 Button
+            self.grid2x2 = ToolButton( "2x2off" )
+            self.grid2x2.set_tooltip(_('2x2'))
+            self.grid2x2.props.sensitive = True
+            self.grid2x2.connect('clicked', self._grid2x2_cb)
+            toolbar_box.toolbar.insert(self.grid2x2, -1)
+            self.grid2x2.show()
+
+            # 3x2 Button
+            self.grid3x2 = ToolButton( "3x2off" )
+            self.grid3x2.set_tooltip(_('3x2'))
+            self.grid3x2.props.sensitive = True
+            self.grid3x2.connect('clicked', self._grid3x2_cb)
+            toolbar_box.toolbar.insert(self.grid3x2, -1)
+            self.grid3x2.show()
+
+            # 2x3 Button
+            self.grid2x3 = ToolButton( "2x3off" )
+            self.grid2x3.set_tooltip(_('2x3'))
+            self.grid2x3.props.sensitive = True
+            self.grid2x3.connect('clicked', self._grid2x3_cb)
+            toolbar_box.toolbar.insert(self.grid2x3, -1)
+            self.grid2x3.show()
+
+            # 3x3 Button
+            self.grid3x3 = ToolButton( "3x3on" )
+            self.grid3x3.set_tooltip(_('3x3'))
+            self.grid3x3.props.sensitive = True
+            self.grid3x3.connect('clicked', self._grid3x3_cb)
+            toolbar_box.toolbar.insert(self.grid3x3, -1)
+            self.grid3x3.show()
 
             separator = gtk.SeparatorToolItem()
             separator.show()
@@ -127,22 +150,46 @@ class CardSortActivity(activity.Activity):
 
 
     #
-    # Blank piece button callback
+    # Grid resize callbacks
     #
-    def _blank_cb(self, button):
-        if self.blank is False:
-            self.blank = True
-            self.blank_piece.set_icon("blank-out")
-            self.blank_piece.set_tooltip(_('Restore piece'))
-            self.results_label.set_text(_("adding blank tile"))
-        else:
-            self.blank = False
-            self.blank_piece.set_icon("blank-in")
-            self.results_label.set_text(_("removing blank tile"))
-            self.blank_piece.set_tooltip(_('Blank piece'))
-        self.tw.grid.toggle_blank()
-        redrawsprites(self.tw)
-        self.results_label.show()
+    def _grid2x2_cb(self, button):
+        self.grid2x2.set_icon("2x2on")
+        self.grid3x2.set_icon("3x2off")
+        self.grid2x3.set_icon("2x3off")
+        self.grid3x3.set_icon("3x3off")
+        self.tw.mode = "2x2"
+        self.tw.test = self.tw.grid.test2x2
+        self.tw.grid.reset2x2(self.tw)
+        return True
+
+    def _grid3x2_cb(self, button):
+        self.grid2x2.set_icon("2x2off")
+        self.grid3x2.set_icon("3x2on")
+        self.grid2x3.set_icon("2x3off")
+        self.grid3x3.set_icon("3x3off")
+        self.tw.mode = "3x2"
+        self.tw.test = self.tw.grid.test3x2
+        self.tw.grid.reset3x2(self.tw)
+        return True
+
+    def _grid2x3_cb(self, button):
+        self.grid2x2.set_icon("2x2off")
+        self.grid3x2.set_icon("3x2off")
+        self.grid2x3.set_icon("2x3on")
+        self.grid3x3.set_icon("3x3off")
+        self.tw.mode = "2x3"
+        self.tw.test = self.tw.grid.test2x3
+        self.tw.grid.reset2x3(self.tw)
+        return True
+
+    def _grid3x3_cb(self, button):
+        self.grid2x2.set_icon("2x2off")
+        self.grid3x2.set_icon("3x2off")
+        self.grid2x3.set_icon("2x3off")
+        self.grid3x3.set_icon("3x3on")
+        self.tw.mode = "3x3"
+        self.tw.test = self.tw.grid.test3x3
+        self.tw.grid.reset3x3(self.tw)
         return True
 
 
@@ -155,14 +202,37 @@ class ProjectToolbar(gtk.Toolbar):
         gtk.Toolbar.__init__(self)
         self.activity = pc
 
-        # Blank piece button
-        self.activity.blank_piece = ToolButton( "blank-in" )
-        self.activity.blank_piece.set_tooltip(_('Blank it'))
-        self.activity.blank_piece.props.sensitive = True
-        self.activity.blank_piece.connect('clicked', self.activity._blank_cb)
-        self.insert(self.activity.blank_piece, -1)
-        self.activity.blank_piece.show()
-        self.activity.blank = False
+        # 2x2 Button
+        self.activity.grid2x2 = ToolButton( "2x2off" )
+        self.activity.grid2x2.set_tooltip(_('2x2'))
+        self.activity.grid2x2.props.sensitive = True
+        self.activity.grid2x2.connect('clicked', self.activity._grid2x2_cb)
+        self.insert(self.activity.grid2x2, -1)
+        self.activity.grid2x2.show()
+
+        # 3x2 Button
+        self.activity.grid3x2 = ToolButton( "3x2off" )
+        self.activity.grid3x2.set_tooltip(_('3x2'))
+        self.activity.grid3x2.props.sensitive = True
+        self.activity.grid3x2.connect('clicked', self.activity._grid3x2_cb)
+        self.insert(self.activity.grid3x2, -1)
+        self.activity.grid3x2.show()
+
+        # 2x3 Button
+        self.activity.grid2x3 = ToolButton( "2x3off" )
+        self.activity.grid2x3.set_tooltip(_('2x3'))
+        self.activity.grid2x3.props.sensitive = True
+        self.activity.grid2x3.connect('clicked', self.activity._grid2x3_cb)
+        self.insert(self.activity.grid2x3, -1)
+        self.activity.grid2x3.show()
+
+        # 3x3 Button
+        self.activity.grid3x3 = ToolButton( "3x3on" )
+        self.activity.grid3x3.set_tooltip(_('3x3'))
+        self.activity.grid3x3.props.sensitive = True
+        self.activity.grid3x3.connect('clicked', self.activity._grid3x3_cb)
+        self.insert(self.activity.grid3x3, -1)
+        self.activity.grid3x3.show()
 
         separator = gtk.SeparatorToolItem()
         separator.set_draw(True)
