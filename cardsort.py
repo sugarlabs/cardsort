@@ -45,9 +45,11 @@ class CardSortMain:
         self.win.connect("delete_event", lambda w,e: gtk.main_quit())
 
         menu = gtk.Menu()
+        """
         menu_items = gtk.MenuItem(_("Toggle blank card"))
         menu.append(menu_items)
         menu_items.connect("activate", self._toggle_card_cb)
+        """
         menu_items = gtk.MenuItem(_("Apply rotation sets"))
         menu.append(menu_items)
         menu_items.connect("activate", self._apply_rotation_sets_cb)
@@ -84,17 +86,16 @@ class CardSortMain:
     def set_title(self, title):
         self.win.set_title(title)
 
-    # Print a string when a menu item is selected
+    """
     def _toggle_card_cb(self, widget):
         self.tw.grid.toggle_blank()
         sprites.redrawsprites(self.tw)
+    """
 
     def _apply_rotation_sets_cb(self, widget):
         self.rotation_sets = get_rotation_sets()
         i = self.r
         for j in range(9):
-            # if the blank card (9) is in the grid,
-            # then the index for the card it replaced will fail
             try: 
                 self.tw.grid.card_table[self.tw.grid.grid.index(j)]\
                     .set_orientation(self.rotation_sets[i][j])
@@ -104,15 +105,6 @@ class CardSortMain:
         self.r += 1
         if self.r == 64:
             self.r = 0
-
-    def _solve_cb_x(self, widget):
-        self.tw.grid.set_grid([8,7,6,5,4,3,2,1,0,9])
-        self.tw.grid.print_grid()
-
-        self.tw.grid.set_orientation([0,90,180,270,0,90,180,270,0,90])
-        self.tw.grid.print_orientations()
-        sprites.redrawsprites(self.tw)
-        return True
 
     def _solve_cb(self, widget):
         self.rotation_sets = get_rotation_sets()
@@ -133,13 +125,13 @@ class CardSortMain:
             for r in range(9):
                 self.tw.grid.card_table[self.tw.grid.grid.index(r)]\
                     .set_orientation(self.rotation_sets[o][r],False)
-            if self.tw.grid.test() is True:
+            if self.tw.test() is True:
                 print _("You solved the puzzle.")
                 self.tw.grid.print_grid()
                 self.tw.grid.print_orientations()
                 self.tw.win.set_title(_("CardSort") + ": " + \
                                       _("You solved the puzzle."))
-                self.tw.grid.reset(self.tw)
+                self.tw.grid.reset3x3(self.tw)
                 self.tw.grid.set_grid(g)
                 for r in range(9):
                     self.tw.grid.card_table[self.tw.grid.grid.index(r)]\

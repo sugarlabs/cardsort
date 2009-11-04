@@ -76,6 +76,8 @@ def new_window(canvas, path, parent=None):
 
     # Initialize the grid
     tw.grid = Grid(tw)
+    tw.mode = "3x3"
+    tw.test = tw.grid.test3x3
 
     # Start solving the puzzle
     tw.press = -1
@@ -128,7 +130,7 @@ def _button_release_cb(win, event, tw):
     redrawsprites(tw)
     tw.press = -1
     tw.release = -1
-    if tw.grid.test() == True:
+    if tw.test() == True:
         if tw.sugar is True:
             tw.activity.results_label.set_text(_("You solved the puzzle."))
             tw.activity.results_label.show()
@@ -162,9 +164,5 @@ def _expose_cb(win, event, tw):
 #
 # callbacks
 #
-def _toggle_cb(win, event, tw):
-    self.tw.grid.toggle_blank()
-    redrawsprites(self.tw)
-
 def _destroy_cb(win, event, tw):
     gtk.main_quit()
