@@ -28,8 +28,7 @@ from card import *
 
 CARD_DEFS = ((1,3,-2,-3),(2,3,-3,-2),(2,3,-4,-4),
              (2,1,-1,-4),(3,4,-4,-3),(4,2,-1,-2),
-             (1,1,-2,-4),(4,2,-3,-4),(1,3,-1,-2),
-             (0,0,0,0))
+             (1,1,-2,-4),(4,2,-3,-4),(1,3,-1,-2))
 
 
 #
@@ -39,7 +38,6 @@ class Grid:
     # 012
     # 345
     # 678
-    # 9 is an extra (blank) card that matches everything
     def __init__(self, tw):
         self.grid = [0,1,2,3,4,5,6,7,8,9]
         self.card_table = {}
@@ -60,15 +58,43 @@ class Grid:
                 x = int((self.w-(self.d*3*self.s))/2)
                 y += int(self.d*self.s)
             i += 1
-            if i == 9: # put the extra (blank) card off the screen
-                y = self.h
 
     # reset everything to initial layout
-    def reset(self, tw):
-        self.set_grid([0,1,2,3,4,5,6,7,8,9])
-        self.set_orientation([0,0,0,0,0,0,0,0,0,0])
+    def reset3x3(self, tw):
+        self.set_grid([0,1,2,3,4,5,6,7,8])
+        self.set_orientation([0,0,0,0,0,0,0,0,0])
         for i in range(9):
             self.card_table[i].reload_image(tw, i)
+
+    # TWO_BY_TWO = ((7,5,0,3),(7,4,5,2),(1,3,5,8),(4,5,6,1))
+    # reset everything to initial layout
+    def reset2x2(self, tw):
+        self.set_grid([4,5,0,6,1,2,3,7,8])
+        self.set_orientation([0,0,0,0,0,0,0,0,0])
+        for i in range(9):
+            self.card_table[i].reload_image(tw, i)
+        for i in (0,2,3,7,8):
+            hide(self.card_table[i].spr)
+
+    # THREE_BY_TWO = ((7,5,0,2,4,3),(5,6,1,4,3,8))
+    # reset everything to initial layout
+    def reset3x2(self, tw):
+        self.set_grid([7,5,0,2,4,3,1,6,8])
+        self.set_orientation([0,0,0,0,0,0,0,0,0])
+        for i in range(9):
+            self.card_table[i].reload_image(tw, i)
+        for i in (1,6,8):
+            hide(self.card_table[i].spr)
+
+    # TWO_BY_THREE = ((5,2,4,6,1,7),(7,1,2,5,8,0))
+    # reset everything to initial layout
+    def reset2x3(self, tw):
+        self.set_grid([5,2,0,4,6,3,1,7,8])
+        self.set_orientation([0,0,0,0,0,0,0,0,0])
+        for i in range(9):
+            self.card_table[i].reload_image(tw, i)
+        for i in (0,3,8):
+            hide(self.card_table[i].spr)
 
     # force a specific layout
     def set_grid(self, newgrid):
@@ -89,10 +115,6 @@ class Grid:
         for c in range(9):
             self.card_table[c].set_orientation(neworientation[c],True)
             self.card_table[c].draw_card()
-
-    # swap in/out the blank card
-    def toggle_blank(self):
-        self.swap(5,9)
 
     # swap card a and card b
     # swap their entries in the grid and the position of their sprites
@@ -133,17 +155,49 @@ class Grid:
         return
 
     # test all relevant borders, ignoring borders on the blank card
-    def test(self):
+    def test3x3(self):
         for i in (0,1,3,4,6,7):
-            if self.card_table[self.grid[i]].east != 0 and \
-               self.card_table[self.grid[i+1]].west != 0 and \
-               self.card_table[self.grid[i]].east + \
+            if self.card_table[self.grid[i]].east + \
                self.card_table[self.grid[i+1]].west != 0:
                 return False
         for i in (0,1,2,3,4,5):
-            if self.card_table[self.grid[i]].south != 0 and \
-               self.card_table[self.grid[i+3]].north != 0 and \
-               self.card_table[self.grid[i]].south + \
+            if self.card_table[self.grid[i]].south + \
+               self.card_table[self.grid[i+3]].north != 0:
+                return False
+        return True
+
+    # test all relevant borders, ignoring borders on the blank card
+    def test2x3(self):
+        for i in (0,3,6):
+            if self.card_table[self.grid[i]].east + \
+               self.card_table[self.grid[i+1]].west != 0:
+                return False
+        for i in (0,1,3,4):
+            if self.card_table[self.grid[i]].south + \
+               self.card_table[self.grid[i+3]].north != 0:
+                return False
+        return True
+
+    # test all relevant borders, ignoring borders on the blank card
+    def test3x2(self):
+        for i in (0,1,3,4):
+            if self.card_table[self.grid[i]].east + \
+               self.card_table[self.grid[i+1]].west != 0:
+                return False
+        for i in (0,1,2):
+            if self.card_table[self.grid[i]].south + \
+               self.card_table[self.grid[i+3]].north != 0:
+                return False
+        return True
+
+    # test all relevant borders, ignoring borders on the blank card
+    def test2x2(self):
+        for i in (0,3):
+            if self.card_table[self.grid[i]].east + \
+               self.card_table[self.grid[i+1]].west != 0:
+                return False
+        for i in (0,1):
+            if self.card_table[self.grid[i]].south + \
                self.card_table[self.grid[i+3]].north != 0:
                 return False
         return True
