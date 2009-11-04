@@ -148,50 +148,80 @@ class CardSortActivity(activity.Activity):
                                                  'images/card'), \
                                     self)
 
+        # Read the mode from the Journal
+        try:
+            if self.metadata['grid'] == '2x2':
+                self.show_grid2x2()
+            elif self.metadata['grid'] == '3x2':
+                self.show_grid3x2()
+            elif self.metadata['grid'] == '2x3':
+                self.show_grid2x3()
+            elif self.metadata['grid'] == '3x3':
+                self.show_grid3x3()
+        except:
+            self.metadata['grid'] = "3x3"
+
 
     #
     # Grid resize callbacks
     #
     def _grid2x2_cb(self, button):
+        self.show_grid2x2()
+        return True
+
+    def show_grid2x2(self):
         self.grid2x2.set_icon("2x2on")
         self.grid3x2.set_icon("3x2off")
         self.grid2x3.set_icon("2x3off")
         self.grid3x3.set_icon("3x3off")
-        self.tw.mode = "2x2"
         self.tw.test = self.tw.grid.test2x2
         self.tw.grid.reset2x2(self.tw)
-        return True
+        self.metadata['grid'] = "2x2"
 
     def _grid3x2_cb(self, button):
+        self.show_grid3x2()
+        return True
+
+    def show_grid3x2(self):
         self.grid2x2.set_icon("2x2off")
         self.grid3x2.set_icon("3x2on")
         self.grid2x3.set_icon("2x3off")
         self.grid3x3.set_icon("3x3off")
-        self.tw.mode = "3x2"
         self.tw.test = self.tw.grid.test3x2
         self.tw.grid.reset3x2(self.tw)
-        return True
+        self.metadata['grid'] = "3x2"
 
     def _grid2x3_cb(self, button):
+        self.show_grid2x3()
+        return True
+
+    def show_grid2x3(self):
         self.grid2x2.set_icon("2x2off")
         self.grid3x2.set_icon("3x2off")
         self.grid2x3.set_icon("2x3on")
         self.grid3x3.set_icon("3x3off")
-        self.tw.mode = "2x3"
         self.tw.test = self.tw.grid.test2x3
         self.tw.grid.reset2x3(self.tw)
-        return True
+        self.metadata['grid'] = "2x3"
 
     def _grid3x3_cb(self, button):
+        self.show_grid3x3()
+        return True
+
+    def show_grid3x3(self):
         self.grid2x2.set_icon("2x2off")
         self.grid3x2.set_icon("3x2off")
         self.grid2x3.set_icon("2x3off")
         self.grid3x3.set_icon("3x3on")
-        self.tw.mode = "3x3"
         self.tw.test = self.tw.grid.test3x3
         self.tw.grid.reset3x3(self.tw)
-        return True
+        self.metadata['grid'] = "3x3"
 
+    """
+    Write the grid status to the Journal
+    """
+    def write_file(self, file_path):
+        pass
 
 #
 # Project toolbar for pre-0.86 toolbars

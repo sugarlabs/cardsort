@@ -65,6 +65,7 @@ class Grid:
         self.set_orientation([0,0,0,0,0,0,0,0,0])
         for i in range(9):
             self.card_table[i].reload_image(tw, i)
+        self.print_grid()
 
     # TWO_BY_TWO = ((7,5,0,3),(7,4,5,2),(1,3,5,8),(4,5,6,1))
     # reset everything to initial layout
@@ -75,6 +76,7 @@ class Grid:
             self.card_table[i].reload_image(tw, i)
         for i in (0,2,3,7,8):
             hide(self.card_table[i].spr)
+        self.print_grid()
 
     # THREE_BY_TWO = ((7,5,0,2,4,3),(5,6,1,4,3,8))
     # reset everything to initial layout
@@ -85,6 +87,7 @@ class Grid:
             self.card_table[i].reload_image(tw, i)
         for i in (1,6,8):
             hide(self.card_table[i].spr)
+        self.print_grid()
 
     # TWO_BY_THREE = ((5,2,4,6,1,7),(7,1,2,5,8,0))
     # reset everything to initial layout
@@ -95,11 +98,13 @@ class Grid:
             self.card_table[i].reload_image(tw, i)
         for i in (0,3,8):
             hide(self.card_table[i].spr)
+        self.print_grid()
 
     # force a specific layout
     def set_grid(self, newgrid):
         x = int((self.w-(self.d*3*self.s))/2)
         y = int((self.h-(self.d*3*self.s))/2)
+        j = 0
         for c in newgrid:
             for i in range(9):
                 if self.card_table[i].spr.label == c:
@@ -110,6 +115,8 @@ class Grid:
             if x > (self.w+(self.d*2*self.s))/2:
                 x = int((self.w-(self.d*3*self.s))/2)
                 y += int(self.d*self.s)
+            self.grid[j] = c
+            j+=1
 
     def set_orientation(self, neworientation):
         for c in range(9):
@@ -119,8 +126,6 @@ class Grid:
     # swap card a and card b
     # swap their entries in the grid and the position of their sprites
     def swap(self, a, b):
-        self.print_grid()
-        print a, b
         # swap grid elements and x,y positions of sprites
         # print "swapping cards " + str(a) + " and " + str(b)
         ai = self.grid.index(a)

@@ -76,7 +76,6 @@ def new_window(canvas, path, parent=None):
 
     # Initialize the grid
     tw.grid = Grid(tw)
-    tw.mode = "3x3"
     tw.test = tw.grid.test3x3
 
     # Start solving the puzzle
