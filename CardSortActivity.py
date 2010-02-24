@@ -67,7 +67,7 @@ class CardSortActivity(activity.Activity):
             activity_button.show()
 
             # 2x2 Button
-            self.grid2x2 = ToolButton( "2x2off" )
+            self.grid2x2 = ToolButton( "2x2on" )
             self.grid2x2.set_tooltip(_('2x2'))
             self.grid2x2.props.sensitive = True
             self.grid2x2.connect('clicked', self._grid2x2_cb)
@@ -91,7 +91,7 @@ class CardSortActivity(activity.Activity):
             self.grid2x3.show()
 
             # 3x3 Button
-            self.grid3x3 = ToolButton( "3x3on" )
+            self.grid3x3 = ToolButton( "3x3off" )
             self.grid3x3.set_tooltip(_('3x3'))
             self.grid3x3.props.sensitive = True
             self.grid3x3.connect('clicked', self._grid3x3_cb)
@@ -159,7 +159,8 @@ class CardSortActivity(activity.Activity):
             elif self.metadata['grid'] == '3x3':
                 self.show_grid3x3()
         except:
-            self.metadata['grid'] = "3x3"
+            self.metadata['grid'] = "2x2"
+            self.show_grid2x2()
 
 
     #
@@ -233,7 +234,7 @@ class ProjectToolbar(gtk.Toolbar):
         self.activity = pc
 
         # 2x2 Button
-        self.activity.grid2x2 = ToolButton( "2x2off" )
+        self.activity.grid2x2 = ToolButton( "2x2on" )
         self.activity.grid2x2.set_tooltip(_('2x2'))
         self.activity.grid2x2.props.sensitive = True
         self.activity.grid2x2.connect('clicked', self.activity._grid2x2_cb)
@@ -257,7 +258,7 @@ class ProjectToolbar(gtk.Toolbar):
         self.activity.grid2x3.show()
 
         # 3x3 Button
-        self.activity.grid3x3 = ToolButton( "3x3on" )
+        self.activity.grid3x3 = ToolButton( "3x3off" )
         self.activity.grid3x3.set_tooltip(_('3x3'))
         self.activity.grid3x3.props.sensitive = True
         self.activity.grid3x3.connect('clicked', self.activity._grid3x3_cb)

@@ -1,4 +1,4 @@
-#Copyright (c) 2009, Walter Bender
+#Copyright (c) 2009,10 Walter Bender
 
 #Permission is hereby granted, free of charge, to any person obtaining a copy
 #of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@ import gtk
 import gobject
 import os.path
 
-from sprites import *
+from sprites import Sprite
 
 #
 # class for defining individual cards
@@ -40,14 +40,14 @@ class Card:
         self.south = c[2]
         self.west = c[3]
         self.orientation = 0
+        self.images = []
+        self.images.append(self.load_image(tw.path,i,tw.card_dim*tw.scale))
+        for j in range(3):
+            self.images.append(self.images[j].rotate_simple(90))
         # create sprite from svg file
-        self.spr = sprNew(tw, x, y,\
-                          self.load_image(tw.path,i,tw.card_dim*tw.scale))
-        self.spr.label = i
-
-    def draw_card(self):
-        setlayer(self.spr,2000)
-        draw(self.spr)
+        self.spr = Sprite(tw.sprites, x, y,self.images[0])
+        self.spr.set_label(i)
+        self.spr.draw()
 
     def load_image(self, file, i, wh):
         return gtk.gdk.pixbuf_new_from_file_at_size(os.path.join(file + \
@@ -55,8 +55,9 @@ class Card:
                                                          '.svg'), \
                                                     int(wh), int(wh))
 
-    def reload_image(self, tw, i):
-        self.spr.image = self.load_image(tw.path,i,tw.card_dim*tw.scale)
+    def reset_image(self, tw, i):
+        while self.orientation != 0:
+            self.rotate_ccw()
 
     def set_orientation(self,r,rotate_spr=True):
         while r != self.orientation:
@@ -70,11 +71,11 @@ class Card:
         self.south = self.west
         self.west = tmp
         self.orientation += 90
-        if self.orientation > 359:
-            self.orientation -= 360
+        if self.orientation == 360:
+            self.orientation = 0
         if rotate_spr is True:
-            tmp = self.spr.image.rotate_simple(90)
-            self.spr.image = tmp
+            self.spr.images[0] = self.images[int(self.orientation/90)]
+        self.spr.draw()
 
     def print_card(self):
         print "(" + str(self.north) + "," + str(self.east) + \

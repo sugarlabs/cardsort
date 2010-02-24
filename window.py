@@ -31,7 +31,7 @@ except:
 
 from grid import *
 from card import *
-
+from sprites import Sprites
 from math import sqrt
 
 CARD_DIM = 135
@@ -68,15 +68,12 @@ def new_window(canvas, path, parent=None):
     tw.height = gtk.gdk.screen_height()-GRID_CELL_SIZE
     tw.card_dim = CARD_DIM
     tw.scale = 0.8 * tw.height/(tw.card_dim*3)
-    tw.area = tw.canvas.window
-    tw.gc = tw.area.new_gc()
-    tw.cm = tw.gc.get_colormap()
-    tw.msgcolor = tw.cm.alloc_color('black')
-    tw.sprites = []
+
+    # Initialize the sprite repository
+    tw.sprites = Sprites(tw.canvas)
 
     # Initialize the grid
     tw.grid = Grid(tw)
-    tw.test = tw.grid.test3x3
 
     # Start solving the puzzle
     tw.press = -1
@@ -92,13 +89,13 @@ def _button_press_cb(win, event, tw):
     win.grab_focus()
     x, y = map(int, event.get_coords())
     tw.start_drag = [x,y]
-    spr = findsprite(tw,(x,y))
+    spr = tw.sprites.find_sprite((x,y))
     if spr is None:
         tw.press = -1
         tw.release = -1
         return True
     # take note of card under button press
-    tw.press = spr.label
+    tw.press = int(spr.labels[0])
     return True
 
 #
@@ -107,13 +104,13 @@ def _button_press_cb(win, event, tw):
 def _button_release_cb(win, event, tw):
     win.grab_focus()
     x, y = map(int, event.get_coords())
-    spr = findsprite(tw,(x,y))
+    spr = tw.sprites.find_sprite((x,y))
     if spr is None:
         tw.press = -1
         tw.release = -1
         return True
     # take note of card under button release
-    tw.release = spr.label
+    tw.release = int(spr.labels[0])
     # if the same card (click) then rotate
     if tw.press == tw.release:
         # check to see if it was an aborted move
@@ -124,9 +121,6 @@ def _button_release_cb(win, event, tw):
     else:
         tw.grid.swap(tw.press,tw.release)
         # tw.grid.print_grid()
-    inval(tw.grid.card_table[tw.press].spr)
-    inval(tw.grid.card_table[tw.release].spr)
-    redrawsprites(tw)
     tw.press = -1
     tw.release = -1
     if tw.test() == True:
@@ -157,7 +151,7 @@ def distance(start,stop):
 # Repaint
 #
 def _expose_cb(win, event, tw):
-    redrawsprites(tw)
+    tw.sprites.redraw_sprites()
     return True
 
 #

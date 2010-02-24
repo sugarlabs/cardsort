@@ -45,10 +45,31 @@ class CardSortMain:
         self.win.connect("delete_event", lambda w,e: gtk.main_quit())
 
         menu = gtk.Menu()
+
+        menu_items = gtk.MenuItem(_("2x2"))
+        menu.append(menu_items)
+        menu_items.connect("activate", self._grid2x2_cb)
+        menu_items.show()
+        menu_items = gtk.MenuItem(_("2x3"))
+        menu.append(menu_items)
+        menu_items.connect("activate", self._grid2x3_cb)
+        menu_items.show()
+        menu_items = gtk.MenuItem(_("3x2"))
+        menu.append(menu_items)
+        menu_items.connect("activate", self._grid3x2_cb)
+        menu_items.show()
+        menu_items = gtk.MenuItem(_("3x3"))
+        menu.append(menu_items)
+        menu_items.connect("activate", self._grid3x3_cb)
+        menu_items.show()
+
+        """
         menu_items = gtk.MenuItem(_("Solve it"))
         menu.append(menu_items)
         menu_items.connect("activate", self._solve_cb)
         menu_items.show()
+        """
+
         root_menu = gtk.MenuItem("Tools")
         root_menu.show()
         root_menu.set_submenu(menu)
@@ -69,16 +90,40 @@ class CardSortMain:
         menu_bar.append(root_menu)
         self.win.show_all()
 
-        # Join the activity
+        # Start the activity
         self.tw = window.new_window(canvas, \
                                os.path.join(os.path.abspath('.'), \
                                             'images/card'))
         self.tw.win = self.win
+        self.tw.test = self.tw.grid.test2x2
+        self.tw.grid.reset2x2(self.tw)
 
     def set_title(self, title):
         self.win.set_title(title)
 
+    #
+    # Grid resize callbacks
+    #
+    def _grid2x2_cb(self, button):
+        self.tw.test = self.tw.grid.test2x2
+        self.tw.grid.reset2x2(self.tw)
+
+    def _grid3x2_cb(self, button):
+        self.tw.test = self.tw.grid.test3x2
+        self.tw.grid.reset3x2(self.tw)
+
+    def _grid2x3_cb(self, button):
+        self.tw.test = self.tw.grid.test2x3
+        self.tw.grid.reset2x3(self.tw)
+
+    def _grid3x3_cb(self, button):
+        self.tw.test = self.tw.grid.test3x3
+        self.tw.grid.reset3x3(self.tw)
+
     def _solve_cb(self, widget):
+        self.show_all()
+        self.set_grid([0,1,2,3,4,5,6,7,8])
+        self.set_orientations([0,0,0,0,0,0,0,0,0])
         self.rotation_sets = get_rotation_sets()
         counter = 0
         a = [0,1,2,3,4,5,6,7,8]
@@ -110,22 +155,9 @@ class CardSortMain:
                         .set_orientation(self.rotation_sets[o][r],True)
                 self.tw.grid.print_grid()
                 self.tw.grid.print_orientations()
-                sprites.redrawsprites(self.tw)
+                self.tw.sprites.redraw_sprites()
                 return True
         return False
-"""
-def permute(inputData, outputSoFar): 
-    for elem in inputData: 
-        if elem not in outputSoFar: 
-            outputSoFar.append(elem) 
-            if len(outputSoFar) == len(inputData): 
-                print outputSoFar 
-            else: 
-                permute(inputData, outputSoFar) # --- Recursion  
-            outputSoFar.pop() 
-
-permute([0,1,2,3,4,5,6,7,8], []) 
-"""
 
 class Permutation: 
     def __init__(self, justalist): 
@@ -143,7 +175,6 @@ class Permutation:
                      for v in self.next(): 
                          yield v 
                  self._sofar.pop() 
-
 
 def main():
     gtk.main()
