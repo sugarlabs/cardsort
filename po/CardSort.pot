@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-06 00:16+0000\n"
+"POT-Creation-Date: 2010-02-24 17:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,53 +20,55 @@ msgstr ""
 msgid "Card Sort"
 msgstr ""
 
-#: /home/walter/Desktop/cardsort/CardSortActivity.py:71
-#: /home/walter/Desktop/cardsort/CardSortActivity.py:142
-msgid "Blank piece"
+#: /home/walter/Desktop/cardsort/CardSortActivity.py:63
+#: /home/walter/Desktop/cardsort/CardSortActivity.py:230
+#: /home/walter/Desktop/cardsort/cardsort.py:41
+msgid "2x2"
 msgstr ""
 
-#: /home/walter/Desktop/cardsort/CardSortActivity.py:83
-#: /home/walter/Desktop/cardsort/CardSortActivity.py:174
-#: /home/walter/Desktop/cardsort/cardsort.py:44
+#: /home/walter/Desktop/cardsort/CardSortActivity.py:71
+#: /home/walter/Desktop/cardsort/CardSortActivity.py:238
+#: /home/walter/Desktop/cardsort/cardsort.py:49
+msgid "3x2"
+msgstr ""
+
+#: /home/walter/Desktop/cardsort/CardSortActivity.py:79
+#: /home/walter/Desktop/cardsort/CardSortActivity.py:246
+#: /home/walter/Desktop/cardsort/cardsort.py:45
+msgid "2x3"
+msgstr ""
+
+#: /home/walter/Desktop/cardsort/CardSortActivity.py:87
+#: /home/walter/Desktop/cardsort/CardSortActivity.py:254
+#: /home/walter/Desktop/cardsort/cardsort.py:53
+msgid "3x3"
+msgstr ""
+
+#: /home/walter/Desktop/cardsort/CardSortActivity.py:98
+#: /home/walter/Desktop/cardsort/CardSortActivity.py:267
+#: /home/walter/Desktop/cardsort/cardsort.py:36
 msgid "click to rotate; drag to swap"
 msgstr ""
 
-#: /home/walter/Desktop/cardsort/CardSortActivity.py:110
+#: /home/walter/Desktop/cardsort/CardSortActivity.py:125
 msgid "Project"
 msgstr ""
 
-#: /home/walter/Desktop/cardsort/CardSortActivity.py:136
-msgid "Restore piece"
-msgstr ""
-
-#: /home/walter/Desktop/cardsort/CardSortActivity.py:137
-msgid "adding blank tile"
-msgstr ""
-
-#: /home/walter/Desktop/cardsort/CardSortActivity.py:141
-msgid "removing blank tile"
-msgstr ""
-
-#: /home/walter/Desktop/cardsort/CardSortActivity.py:160
-msgid "Blank it"
-msgstr ""
-
-#: /home/walter/Desktop/cardsort/window.py:133
-#: /home/walter/Desktop/cardsort/window.py:137
+#: /home/walter/Desktop/cardsort/window.py:122
+#: /home/walter/Desktop/cardsort/window.py:126
+#: /home/walter/Desktop/cardsort/cardsort.py:138
+#: /home/walter/Desktop/cardsort/cardsort.py:142
 msgid "You solved the puzzle."
 msgstr ""
 
-#: /home/walter/Desktop/cardsort/window.py:136
-#: /home/walter/Desktop/cardsort/window.py:143
-#: /home/walter/Desktop/cardsort/cardsort.py:43
+#: /home/walter/Desktop/cardsort/window.py:125
+#: /home/walter/Desktop/cardsort/window.py:132
+#: /home/walter/Desktop/cardsort/cardsort.py:35
+#: /home/walter/Desktop/cardsort/cardsort.py:141
 msgid "CardSort"
 msgstr ""
 
-#: /home/walter/Desktop/cardsort/window.py:140
-#: /home/walter/Desktop/cardsort/window.py:143
+#: /home/walter/Desktop/cardsort/window.py:129
+#: /home/walter/Desktop/cardsort/window.py:132
 msgid "Keep trying."
-msgstr ""
-
-#: /home/walter/Desktop/cardsort/cardsort.py:48
-msgid "Toggle blank card"
 msgstr ""
