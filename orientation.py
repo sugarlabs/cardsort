@@ -1,6 +1,18 @@
+#Copyright (c) 2009,10 Walter Bender
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+#
+# You should have received a copy of the GNU Lesser General Public
+# License along with this library; if not, write to the
+# Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+# Boston, MA 02111-1307, USA.
+
 # There are a limited number of valid orientation combinations available,
 # assuming each card has two neighboring patterns of the same gender, e.g.,
-# north and east are the same gender, wst and south are the same gender in the
+# north and east are the same gender, west and south are the same gender in the
 # initial position
 #
 # Since the gender of a neighboring edge has to be opposite, the following
