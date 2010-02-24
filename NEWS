@@ -1,6 +1,7 @@
 5
 
 * default grid is 2x2
+* highlight matches
 * randomize initial orientation
 * more game options
 * new sprite library
