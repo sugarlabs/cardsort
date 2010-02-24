@@ -16,7 +16,8 @@ import gtk
 import gobject
 
 from random import uniform
-from card import *
+from sprites import Sprite
+from card import Card, load_image
 
 CARD_DEFS = ((1,3,-2,-3),(2,3,-3,-2),(2,3,-4,-4),
              (2,1,-1,-4),(3,4,-4,-3),(4,2,-1,-2),
@@ -35,22 +36,45 @@ class Grid:
     """
     def __init__(self, tw):
         self.grid = [0,1,2,3,4,5,6,7,8]
-        self.card_table = {}
+        self.card_table = []
+        self.mask_table = []
         # Stuff to keep around for the graphics
         self.w = int(tw.width)
         self.h = int(tw.height)
         self.d = int(tw.card_dim*tw.scale)
+        self.s = tw.scale
         # Initialize the cards
         i = 0 # i is used as a label on the sprite
         for c in CARD_DEFS:
             x, y = self.i_to_xy(i)
-            self.card_table[i] = Card(tw,c,i,x,y)
+            self.card_table.append(Card(tw,c,i,x,y))
             i += 1
+        # Initialize the masks (We need up to 6 of each one.)
+        for i in range(4):
+            name = "%s/mask%dh.svg" % (tw.path, i)
+            bitmap = load_image(name, 120*tw.scale, 48*tw.scale)
+            for j in range(6):
+                x, y = self.mh_to_xy(j)
+                self.mask_table.append(Sprite(tw.sprites, x, y, bitmap))
+            name = "%s/mask%dv.svg" % (tw.path, i)
+            bitmap = load_image(name, 48*tw.scale, 120*tw.scale)
+            for j in range(6):
+                x, y = self.mv_to_xy(j)
+                self.mask_table.append(Sprite(tw.sprites, x, y, bitmap))
+        self.hide_masks()
 
     # Utility functions
     def i_to_xy(self, i):
         return int((self.w-(self.d*3))/2) + (i%3)*self.d,\
                int((self.h-(self.d*3))/2) + int(i/3)*self.d
+
+    def mh_to_xy(self, i):
+        return int((self.w-(self.d*3))/2 + ((i%2)+1)*self.d - 60*self.s),\
+               int((self.h-(self.d*3))/2 + (int(i/2)+.5)*self.d - 24*self.s)
+
+    def mv_to_xy(self, i):
+        return int((self.w-(self.d*3))/2 + ((i%3)+.5)*self.d - 24*self.s),\
+               int((self.h-(self.d*3))/2 + (int(i/3)+1)*self.d - 60*self.s)
 
     def xy_to_i(self, x, y):
         return (x-int((self.w-(self.d*3))/2))/self.d +\
@@ -80,15 +104,23 @@ class Grid:
         for i in list:
             self.card_table[i].spr.hide()
 
+    def hide_masks(self):
+        for i in self.mask_table:
+            i.hide()
+
     # Reset everything to initial layout
     def reset3x3(self, tw):
         self.show_all()
+        self.hide_masks()
         self.set_grid([0,1,2,3,4,5,6,7,8])
         self.randomize_orientation()
+        self.hide_masks()
+        self.test3x3()
 
     # Two by two = ((7,5,0,3),(7,4,5,2),(1,3,5,8),(4,5,6,1))
     def reset2x2(self, tw):
         self.show_all()
+        self.hide_masks()
         self.randomize_orientation()
         r = int(uniform(0,4))
         if r == 0:
@@ -103,10 +135,13 @@ class Grid:
         else:
             self.set_grid([4,5,0,6,1,2,3,7,8])
             self.hide_list([0,2,3,7,8])
+        self.hide_masks()
+        self.test2x2()
 
     # Three by two = ((7,5,0,2,4,3),(5,6,1,4,3,8))
     def reset3x2(self, tw):
         self.show_all()
+        self.hide_masks()
         self.randomize_orientation()
         r = int(uniform(0,2))
         if r == 0:
@@ -115,11 +150,14 @@ class Grid:
         else:
             self.set_grid([5,6,1,4,3,8,0,2,7])
             self.hide_list([0,2,7])
+        self.hide_masks()
+        self.test3x2()
 
     # Two by three = ((5,2,4,6,1,7),(7,1,2,5,8,0))
     # reset everything to initial layout
     def reset2x3(self, tw):
         self.show_all()
+        self.hide_masks()
         self.randomize_orientation()
         r = int(uniform(0,2))
         if r == 0:
@@ -128,6 +166,8 @@ class Grid:
         else:
             self.set_grid([7,1,3,2,5,4,8,0,6])
             self.hide_list([3,4,6])
+        self.hide_masks()
+        self.test2x3()
 
     # swap card a and card b
     # swap their entries in the grid and the position of their sprites
@@ -163,8 +203,25 @@ class Grid:
               self.card_table[self.grid[8]].orientation 
         return
 
-    # test all relevant borders, ignoring borders on the blank card
+    # Test all relevant borders, ignoring edges
+    # Highlight matches.
     def test3x3(self):
+        for m, i in enumerate([0,1,3,4,6,7]):
+            offset = abs(self.card_table[self.grid[i]].east)
+            offset = (offset-1)*12
+            if self.card_table[self.grid[i]].east + \
+               self.card_table[self.grid[i+1]].west == 0:
+                self.mask_table[m+offset].set_layer(2000)
+            else:
+                self.mask_table[m+offset].hide()
+        for m, i in enumerate([0,1,2,3,4,5]):
+            offset = abs(self.card_table[self.grid[i]].south)
+            offset = (offset-1)*12+6
+            if self.card_table[self.grid[i]].south + \
+               self.card_table[self.grid[i+3]].north == 0:
+                self.mask_table[m+offset].set_layer(2000)
+            else:
+                self.mask_table[m+offset].hide()
         for i in (0,1,3,4,6,7):
             if self.card_table[self.grid[i]].east + \
                self.card_table[self.grid[i+1]].west != 0:
@@ -175,8 +232,23 @@ class Grid:
                 return False
         return True
 
-    # test all relevant borders, ignoring borders on the blank card
     def test2x3(self):
+        for m, i in enumerate([0,3,6]):
+            offset = abs(self.card_table[self.grid[i]].east)
+            offset = (offset-1)*12
+            if self.card_table[self.grid[i]].east + \
+               self.card_table[self.grid[i+1]].west == 0:
+                self.mask_table[m*2+offset].set_layer(2000)
+            else:
+                self.mask_table[m*2+offset].hide()
+        for m, i in enumerate([0,1,3,4]):
+            offset = abs(self.card_table[self.grid[i]].south)
+            offset = (offset-1)*12+6
+            if self.card_table[self.grid[i]].south + \
+               self.card_table[self.grid[i+3]].north == 0:
+                self.mask_table[i+offset].set_layer(2000)
+            else:
+                self.mask_table[i+offset].hide()
         for i in (0,3,6):
             if self.card_table[self.grid[i]].east + \
                self.card_table[self.grid[i+1]].west != 0:
@@ -187,8 +259,23 @@ class Grid:
                 return False
         return True
 
-    # test all relevant borders, ignoring borders on the blank card
     def test3x2(self):
+        for m, i in enumerate([0,1,3,4]):
+            offset = abs(self.card_table[self.grid[i]].east)
+            offset = (offset-1)*12
+            if self.card_table[self.grid[i]].east + \
+               self.card_table[self.grid[i+1]].west == 0:
+                self.mask_table[m+offset].set_layer(2000)
+            else:
+                self.mask_table[m+offset].hide()
+        for m, i in enumerate([0,1,2]):
+            offset = abs(self.card_table[self.grid[i]].south)
+            offset = (offset-1)*12+6
+            if self.card_table[self.grid[i]].south + \
+               self.card_table[self.grid[i+3]].north == 0:
+                self.mask_table[m+offset].set_layer(2000)
+            else:
+                self.mask_table[m+offset].hide()
         for i in (0,1,3,4):
             if self.card_table[self.grid[i]].east + \
                self.card_table[self.grid[i+1]].west != 0:
@@ -199,8 +286,23 @@ class Grid:
                 return False
         return True
 
-    # test all relevant borders, ignoring borders on the blank card
     def test2x2(self):
+        for m, i in enumerate([0,3]):
+            offset = abs(self.card_table[self.grid[i]].east)
+            offset = (offset-1)*12
+            if self.card_table[self.grid[i]].east + \
+               self.card_table[self.grid[i+1]].west == 0:
+                self.mask_table[m*2+offset].set_layer(2000)
+            else:
+                self.mask_table[m*2+offset].hide()
+        for m, i in enumerate([0,1]):
+            offset = abs(self.card_table[self.grid[i]].south)
+            offset = (offset-1)*12+6
+            if self.card_table[self.grid[i]].south + \
+               self.card_table[self.grid[i+3]].north == 0:
+                self.mask_table[m+offset].set_layer(2000)
+            else:
+                self.mask_table[m+offset].hide()
         for i in (0,3):
             if self.card_table[self.grid[i]].east + \
                self.card_table[self.grid[i+1]].west != 0:

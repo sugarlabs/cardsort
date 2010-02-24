@@ -18,6 +18,9 @@ import os.path
 
 from sprites import Sprite
 
+def load_image(file, w, h):
+    return gtk.gdk.pixbuf_new_from_file_at_size(file, int(w), int(h))
+
 #
 # class for defining individual cards
 #
@@ -33,19 +36,15 @@ class Card:
         self.west = c[3]
         self.orientation = 0
         self.images = []
-        self.images.append(self.load_image(tw.path,i,tw.card_dim*tw.scale))
+        file = "%s/card%d.svg" % (tw.path,i)
+        self.images.append(load_image(file, tw.card_dim*tw.scale,
+                                                 tw.card_dim*tw.scale))
         for j in range(3):
             self.images.append(self.images[j].rotate_simple(90))
         # create sprite from svg file
-        self.spr = Sprite(tw.sprites, x, y,self.images[0])
+        self.spr = Sprite(tw.sprites, x, y, self.images[0])
         self.spr.set_label(i)
         self.spr.draw()
-
-    def load_image(self, file, i, wh):
-        return gtk.gdk.pixbuf_new_from_file_at_size(os.path.join(file + \
-                                                         str(i) + "x" + \
-                                                         '.svg'), \
-                                                    int(wh), int(wh))
 
     def reset_image(self, tw, i):
         while self.orientation != 0:

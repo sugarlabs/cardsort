@@ -85,7 +85,7 @@ class CardSortMain:
         # Start the activity
         self.tw = window.new_window(canvas, \
                                os.path.join(os.path.abspath('.'), \
-                                            'images/card'))
+                                            'images'))
         self.tw.win = self.win
         self.tw.test = self.tw.grid.test2x2
         self.tw.grid.reset2x2(self.tw)

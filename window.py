@@ -81,6 +81,7 @@ def _button_press_cb(win, event, tw):
     win.grab_focus()
     x, y = map(int, event.get_coords())
     tw.start_drag = [x,y]
+    tw.grid.hide_masks()
     spr = tw.sprites.find_sprite((x,y))
     if spr is None:
         tw.press = -1
@@ -95,6 +96,7 @@ def _button_press_cb(win, event, tw):
 #
 def _button_release_cb(win, event, tw):
     win.grab_focus()
+    tw.grid.hide_masks()
     x, y = map(int, event.get_coords())
     spr = tw.sprites.find_sprite((x,y))
     if spr is None:

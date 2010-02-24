@@ -137,7 +137,7 @@ class CardSortActivity(activity.Activity):
         # Initialize the canvas
         self.tw = window.new_window(canvas, \
                                     os.path.join(activity.get_bundle_path(), \
-                                                 'images/card'), \
+                                                 'images'), \
                                     self)
 
         # Read the mode from the Journal
