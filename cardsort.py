@@ -1,16 +1,15 @@
 #!/usr/bin/env python
 
-#Copyright (c) 2009,10 Walter Bender
+#Copyright (c) 2009-11 Walter Bender
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version.
 #
-# You should have received a copy of the GNU Lesser General Public
-# License along with this library; if not, write to the
-# Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-# Boston, MA 02111-1307, USA.
+# You should have received a copy of the GNU General Public License
+# along with this library; if not, write to the Free Software
+# Foundation, 51 Franklin Street, Suite 500 Boston, MA 02110-1335 USA
 
 import pygtk
 pygtk.require('2.0')
@@ -19,11 +18,9 @@ import gtk
 from gettext import gettext as _
 import os.path
 
-import window
-import grid
-import card
-import sprites
+from window import Game
 from orientation import get_rotation_sets
+
 
 class CardSortMain:
     def __init__(self):
@@ -83,12 +80,10 @@ class CardSortMain:
         self.win.show_all()
 
         # Start the activity
-        self.tw = window.new_window(canvas, \
-                               os.path.join(os.path.abspath('.'), \
-                                            'images'))
-        self.tw.win = self.win
-        self.tw.test = self.tw.grid.test2x2
-        self.tw.grid.reset2x2(self.tw)
+        self.game = Game(canvas, os.path.join(os.path.abspath('.'), 'images'))
+        self.game.win = self.win
+        self.game.test = self.game.grid.test2x2
+        self.game.grid.reset2x2(self.game)
 
     def set_title(self, title):
         self.win.set_title(title)
@@ -97,20 +92,20 @@ class CardSortMain:
     # Grid resize callbacks
     #
     def _grid2x2_cb(self, button):
-        self.tw.test = self.tw.grid.test2x2
-        self.tw.grid.reset2x2(self.tw)
+        self.game.test = self.game.grid.test2x2
+        self.game.grid.reset2x2(self.game)
 
     def _grid3x2_cb(self, button):
-        self.tw.test = self.tw.grid.test3x2
-        self.tw.grid.reset3x2(self.tw)
+        self.game.test = self.game.grid.test3x2
+        self.game.grid.reset3x2(self.game)
 
     def _grid2x3_cb(self, button):
-        self.tw.test = self.tw.grid.test2x3
-        self.tw.grid.reset2x3(self.tw)
+        self.game.test = self.game.grid.test2x3
+        self.game.grid.reset2x3(self.game)
 
     def _grid3x3_cb(self, button):
-        self.tw.test = self.tw.grid.test3x3
-        self.tw.grid.reset3x3(self.tw)
+        self.game.test = self.game.grid.test3x3
+        self.game.grid.reset3x3(self.game)
 
     def _solve_cb(self, widget):
         self.show_all()
@@ -124,30 +119,30 @@ class CardSortMain:
                 return True
             counter += 1
             if (counter/1000)*1000 == counter:
-                print str(counter) + ": " + str(self.tw.grid.grid)
+                print str(counter) + ": " + str(self.game.grid.grid)
         print "no solution found :("
         return True
 
     def test(self,g):
-        self.tw.grid.grid = g
+        self.game.grid.grid = g
         for o in range(64):
             for r in range(9):
-                self.tw.grid.card_table[self.tw.grid.grid.index(r)]\
+                self.game.grid.card_table[self.game.grid.grid.index(r)]\
                     .set_orientation(self.rotation_sets[o][r],False)
-            if self.tw.test() is True:
+            if self.game.test() is True:
                 print _("You solved the puzzle.")
-                self.tw.grid.print_grid()
-                self.tw.grid.print_orientations()
-                self.tw.win.set_title(_("CardSort") + ": " + \
+                self.game.grid.print_grid()
+                self.game.grid.print_orientations()
+                self.game.win.set_title(_("CardSort") + ": " + \
                                       _("You solved the puzzle."))
-                self.tw.grid.reset3x3(self.tw)
-                self.tw.grid.set_grid(g)
+                self.game.grid.reset3x3(self.game)
+                self.game.grid.set_grid(g)
                 for r in range(9):
-                    self.tw.grid.card_table[self.tw.grid.grid.index(r)]\
+                    self.game.grid.card_table[self.game.grid.grid.index(r)]\
                         .set_orientation(self.rotation_sets[o][r],True)
-                self.tw.grid.print_grid()
-                self.tw.grid.print_orientations()
-                self.tw.sprites.redraw_sprites()
+                self.game.grid.print_grid()
+                self.game.grid.print_orientations()
+                self.game.sprites.redraw_sprites()
                 return True
         return False
 

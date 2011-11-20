@@ -1,14 +1,13 @@
-#Copyright (c) 2009,10 Walter Bender
+#Copyright (c) 2009-11 Walter Bender
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version.
 #
-# You should have received a copy of the GNU Lesser General Public
-# License along with this library; if not, write to the
-# Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-# Boston, MA 02111-1307, USA.
+# You should have received a copy of the GNU General Public License
+# along with this library; if not, write to the Free Software
+# Foundation, 51 Franklin Street, Suite 500 Boston, MA 02110-1335 USA
 
 import pygtk
 pygtk.require('2.0')
@@ -35,7 +34,7 @@ import locale
 import os.path
 
 from sprites import *
-import window
+from window import Game
 
 SERVICE = 'org.sugarlabs.CardSortActivity'
 IFACE = SERVICE
@@ -128,17 +127,15 @@ class CardSortActivity(activity.Activity):
 
         # Create a canvas
         canvas = gtk.DrawingArea()
-        canvas.set_size_request(gtk.gdk.screen_width(), \
+        canvas.set_size_request(gtk.gdk.screen_width(),
                                 gtk.gdk.screen_height())
         self.set_canvas(canvas)
         canvas.show()
         self.show_all()
 
         # Initialize the canvas
-        self.tw = window.new_window(canvas, \
-                                    os.path.join(activity.get_bundle_path(), \
-                                                 'images'), \
-                                    self)
+        self.game = Game(canvas, os.path.join(
+                activity.get_bundle_path(), 'images'), self)
 
         # Read the mode from the Journal
         try:
@@ -167,8 +164,8 @@ class CardSortActivity(activity.Activity):
         self.grid3x2.set_icon("3x2off")
         self.grid2x3.set_icon("2x3off")
         self.grid3x3.set_icon("3x3off")
-        self.tw.test = self.tw.grid.test2x2
-        self.tw.grid.reset2x2(self.tw)
+        self.game.test = self.game.grid.test2x2
+        self.game.grid.reset2x2(self.game)
         self.metadata['grid'] = "2x2"
 
     def _grid3x2_cb(self, button):
@@ -180,8 +177,8 @@ class CardSortActivity(activity.Activity):
         self.grid3x2.set_icon("3x2on")
         self.grid2x3.set_icon("2x3off")
         self.grid3x3.set_icon("3x3off")
-        self.tw.test = self.tw.grid.test3x2
-        self.tw.grid.reset3x2(self.tw)
+        self.game.test = self.game.grid.test3x2
+        self.game.grid.reset3x2(self.game)
         self.metadata['grid'] = "3x2"
 
     def _grid2x3_cb(self, button):
@@ -193,8 +190,8 @@ class CardSortActivity(activity.Activity):
         self.grid3x2.set_icon("3x2off")
         self.grid2x3.set_icon("2x3on")
         self.grid3x3.set_icon("3x3off")
-        self.tw.test = self.tw.grid.test2x3
-        self.tw.grid.reset2x3(self.tw)
+        self.game.test = self.game.grid.test2x3
+        self.game.grid.reset2x3(self.game)
         self.metadata['grid'] = "2x3"
 
     def _grid3x3_cb(self, button):
@@ -206,8 +203,8 @@ class CardSortActivity(activity.Activity):
         self.grid3x2.set_icon("3x2off")
         self.grid2x3.set_icon("2x3off")
         self.grid3x3.set_icon("3x3on")
-        self.tw.test = self.tw.grid.test3x3
-        self.tw.grid.reset3x3(self.tw)
+        self.game.test = self.game.grid.test3x3
+        self.game.grid.reset3x3(self.game)
         self.metadata['grid'] = "3x3"
 
     """

@@ -1,14 +1,13 @@
-#Copyright (c) 2009,10 Walter Bender
+#Copyright (c) 2009-11 Walter Bender
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version.
 #
-# You should have received a copy of the GNU Lesser General Public
-# License along with this library; if not, write to the
-# Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-# Boston, MA 02111-1307, USA.
+# You should have received a copy of the GNU General Public License
+# along with this library; if not, write to the Free Software
+# Foundation, 51 Franklin Street, Suite 500 Boston, MA 02110-1335 USA
 
 import pygtk
 pygtk.require('2.0')
@@ -29,28 +28,27 @@ class Card:
     # Heart   = 2,-2
     # Club    = 3,-3
     # Diamond = 4,-4
-    def __init__(self,tw,c,i,x,y):
+    def __init__(self, game, c, i, x, y):
         self.north = c[0]
         self.east = c[1]
         self.south = c[2]
         self.west = c[3]
         self.orientation = 0
         self.images = []
-        file = "%s/card%d.svg" % (tw.path,i)
-        self.images.append(load_image(file, tw.card_dim*tw.scale,
-                                                 tw.card_dim*tw.scale))
+        self.images.append(load_image(
+                os.path.join(game.path, 'card%d.svg' % (i)),
+                game.card_dim * game.scale, game.card_dim * game.scale))
         for j in range(3):
             self.images.append(self.images[j].rotate_simple(90))
         # create sprite from svg file
-        self.spr = Sprite(tw.sprites, x, y, self.images[0])
+        self.spr = Sprite(game.sprites, x, y, self.images[0])
         self.spr.set_label(i)
-        self.spr.draw()
 
-    def reset_image(self, tw, i):
+    def reset_image(self, game, i):
         while self.orientation != 0:
             self.rotate_ccw()
 
-    def set_orientation(self,r,rotate_spr=True):
+    def set_orientation(self, r, rotate_spr=True):
         while r != self.orientation:
             self.rotate_ccw(rotate_spr)
 
@@ -65,8 +63,7 @@ class Card:
         if self.orientation == 360:
             self.orientation = 0
         if rotate_spr is True:
-            self.spr.set_shape(self.images[int(self.orientation/90)])
-        self.spr.draw()
+            self.spr.set_shape(self.images[int(self.orientation / 90)])
 
     def print_card(self):
         print "(" + str(self.north) + "," + str(self.east) + \
