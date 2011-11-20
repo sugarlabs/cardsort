@@ -65,7 +65,7 @@ class Card:
         if self.orientation == 360:
             self.orientation = 0
         if rotate_spr is True:
-            self.spr.images[0] = self.images[int(self.orientation/90)]
+            self.spr.set_shape(self.images[int(self.orientation/90)])
         self.spr.draw()
 
     def print_card(self):

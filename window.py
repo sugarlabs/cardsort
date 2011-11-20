@@ -144,9 +144,20 @@ def distance(start,stop):
 #
 # Repaint
 #
-def _expose_cb(win, event, tw):
-    tw.sprites.redraw_sprites()
+def _expose_cb(tw, win, event):
+    ''' Callback to handle window expose events '''
+    tw.do_expose_event(event)
     return True
+
+def do_expose_event(tw, event):
+    ''' Handle the expose-event by drawing '''
+    # Restrict Cairo to the exposed area
+    cr = tw.canvas.window.cairo_create()
+    cr.rectangle(event.area.x, event.area.y,
+                 event.area.width, event.area.height)
+    cr.clip()
+    # Refresh sprite list
+    tw.sprites.redraw_sprites(cr=cr)
 
 #
 # callbacks
