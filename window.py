@@ -1,5 +1,6 @@
-#Copyright (c) 2009-11 Walter Bender
-
+# -*- coding: utf-8 -*-
+# Copyright (c) 2009-11 Walter Bender
+# Copyright (c) 2012 Ignacio Rodríguez
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
@@ -8,17 +9,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this library; if not, write to the Free Software
 # Foundation, 51 Franklin Street, Suite 500 Boston, MA 02110-1335 USA
-
+from gi.repository import Gtk, Gdk
 import pygtk
 pygtk.require('2.0')
-import gtk
 from gettext import gettext as _
 
-try:
-    from sugar.graphics import style
-    GRID_CELL_SIZE = style.GRID_CELL_SIZE
-except:
-    GRID_CELL_SIZE = 0
+from sugar3.graphics import style
+GRID_CELL_SIZE = style.GRID_CELL_SIZE
 
 from grid import Grid
 from sprites import Sprites
@@ -47,14 +44,13 @@ class Game():
             self.canvas = canvas
             parent.show_all()
     
-        self.canvas.set_flags(gtk.CAN_FOCUS)
-        self.canvas.add_events(gtk.gdk.BUTTON_PRESS_MASK)
-        self.canvas.add_events(gtk.gdk.BUTTON_RELEASE_MASK)
-        self.canvas.connect("expose-event", self._expose_cb)
+        self.canvas.add_events(Gdk.EventMask.BUTTON_PRESS_MASK)
+        self.canvas.add_events(Gdk.EventMask.BUTTON_RELEASE_MASK)
+        self.canvas.connect("draw", self.__draw_cb)
         self.canvas.connect("button-press-event", self._button_press_cb)
         self.canvas.connect("button-release-event", self._button_release_cb)
-        self.width = gtk.gdk.screen_width()
-        self.height = gtk.gdk.screen_height()-GRID_CELL_SIZE
+        self.width = Gdk.Screen.width()
+        self.height = Gdk.Screen.height()-GRID_CELL_SIZE
         self.card_dim = CARD_DIM
         self.scale = 0.8 * self.height / (self.card_dim * 3)
     
@@ -139,10 +135,8 @@ class Game():
     #
     # Repaint
     #
-    def _expose_cb(self, win, event):
-        ''' Callback to handle window expose events '''
-        self.do_expose_event(event)
-        return True
+    def __draw_cb(self, canvas, cr):
+		self.sprites.redraw_sprites(cr=cr)
     
     def do_expose_event(self, event):
         ''' Handle the expose-event by drawing '''
@@ -158,4 +152,4 @@ class Game():
     # callbacks
     #
     def _destroy_cb(self, win, event):
-        gtk.main_quit()
+        Gtk.main_quit()
