@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2009-11 Walter Bender
+# Copyright (c) 2009-12 Walter Bender
 # Copyright (c) 2012 Ignacio Rodríguez
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ import locale
 import os.path
 
 from sprites import *
+from toolbar_utils import radio_factory, label_factory, separator_factory
 from window import Game
 
 SERVICE = 'org.sugarlabs.CardSortActivity'
@@ -50,54 +51,37 @@ class CardSortActivity(activity.Activity):
 	toolbar_box.toolbar.insert(activity_button, 0)
 	activity_button.show()
 
-	# 2x2 Button
-	self.grid2x2 = ToolButton( "2x2on" )
-	self.grid2x2.set_tooltip(_('2x2'))
-	self.grid2x2.props.sensitive = True
-	self.grid2x2.connect('clicked', self._grid2x2_cb)
-	toolbar_box.toolbar.insert(self.grid2x2, -1)
-	self.grid2x2.show()
+        self.grid2x2 = radio_factory('2x2on',
+                                     toolbar_box.toolbar,
+                                     self._grid2x2_cb,
+                                     tooltip=_('2x2'),
+                                     group = None)
+        self.grid3x2 = radio_factory('3x2on',
+                                     toolbar_box.toolbar,
+                                     self._grid3x2_cb,
+                                     tooltip=_('3x2'),
+                                     group = self.grid2x2)
+        self.grid2x3 = radio_factory('2x3on',
+                                     toolbar_box.toolbar,
+                                     self._grid2x3_cb,
+                                     tooltip=_('2x3'),
+                                     group = self.grid2x2)
+        self.grid3x3 = radio_factory('3x3on',
+                                     toolbar_box.toolbar,
+                                     self._grid3x3_cb,
+                                     tooltip=_('3x3'),
+                                     group = self.grid2x2)
 
-	# 3x2 Button
-	self.grid3x2 = ToolButton( "3x2off" )
-	self.grid3x2.set_tooltip(_('3x2'))
-	self.grid3x2.props.sensitive = True
-	self.grid3x2.connect('clicked', self._grid3x2_cb)
-	toolbar_box.toolbar.insert(self.grid3x2, -1)
-	self.grid3x2.show()
+        separator_factory(toolbar_box.toolbar,
+                          visible=False)
 
-	# 2x3 Button
-	self.grid2x3 = ToolButton( "2x3off" )
-	self.grid2x3.set_tooltip(_('2x3'))
-	self.grid2x3.props.sensitive = True
-	self.grid2x3.connect('clicked', self._grid2x3_cb)
-	toolbar_box.toolbar.insert(self.grid2x3, -1)
-	self.grid2x3.show()
+	self.results_label = label_factory(toolbar_box.toolbar,
+                                           _("click to rotate; drag to swap"),
+                                           width=300)
 
-	# 3x3 Button
-	self.grid3x3 = ToolButton( "3x3off" )
-	self.grid3x3.set_tooltip(_('3x3'))
-	self.grid3x3.props.sensitive = True
-	self.grid3x3.connect('clicked', self._grid3x3_cb)
-	toolbar_box.toolbar.insert(self.grid3x3, -1)
-	self.grid3x3.show()
-
-	separator = Gtk.SeparatorToolItem()
-	separator.show()
-	toolbar_box.toolbar.insert(separator, -1)
-
-	# Label for showing status
-	self.results_label = Gtk.Label(_("click to rotate; drag to swap"))
-	self.results_label.show()
-	results_toolitem = Gtk.ToolItem()
-	results_toolitem.add(self.results_label)
-	toolbar_box.toolbar.insert(results_toolitem,-1)
-
-	separator = Gtk.SeparatorToolItem()
-	separator.props.draw = False
-	separator.set_expand(True)
-	separator.show()
-	toolbar_box.toolbar.insert(separator, -1)
+        separator_factory(toolbar_box.toolbar,
+                          expand=True,
+                          visible=False)
 
 	# The ever-present Stop Button
 	stop_button = StopButton(self)
@@ -143,10 +127,6 @@ class CardSortActivity(activity.Activity):
         return True
 
     def show_grid2x2(self):
-        self.grid2x2.set_icon_name("2x2on")
-        self.grid3x2.set_icon_name("3x2off")
-        self.grid2x3.set_icon_name("2x3off")
-        self.grid3x3.set_icon_name("3x3off")
         self.game.test = self.game.grid.test2x2
         self.game.grid.reset2x2(self.game)
         self.metadata['grid'] = "2x2"
@@ -156,10 +136,6 @@ class CardSortActivity(activity.Activity):
         return True
 
     def show_grid3x2(self):
-        self.grid2x2.set_icon_name("2x2off")
-        self.grid3x2.set_icon_name("3x2on")
-        self.grid2x3.set_icon_name("2x3off")
-        self.grid3x3.set_icon_name("3x3off")
         self.game.test = self.game.grid.test3x2
         self.game.grid.reset3x2(self.game)
         self.metadata['grid'] = "3x2"
@@ -169,10 +145,6 @@ class CardSortActivity(activity.Activity):
         return True
 
     def show_grid2x3(self):
-        self.grid2x2.set_icon_name("2x2off")
-        self.grid3x2.set_icon_name("3x2off")
-        self.grid2x3.set_icon_name("2x3on")
-        self.grid3x3.set_icon_name("3x3off")
         self.game.test = self.game.grid.test2x3
         self.game.grid.reset2x3(self.game)
         self.metadata['grid'] = "2x3"
@@ -182,10 +154,6 @@ class CardSortActivity(activity.Activity):
         return True
 
     def show_grid3x3(self):
-        self.grid2x2.set_icon_name("2x2off")
-        self.grid3x2.set_icon_name("3x2off")
-        self.grid2x3.set_icon_name("2x3off")
-        self.grid3x3.set_icon_name("3x3on")
         self.game.test = self.game.grid.test3x3
         self.game.grid.reset3x3(self.game)
         self.metadata['grid'] = "3x3"
