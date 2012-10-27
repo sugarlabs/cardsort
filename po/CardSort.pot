@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-24 17:20+0000\n"
+"POT-Creation-Date: 2012-10-26 21:24-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,55 +21,38 @@ msgstr ""
 msgid "Card Sort"
 msgstr ""
 
-#: /home/walter/Desktop/cardsort/CardSortActivity.py:63
-#: /home/walter/Desktop/cardsort/CardSortActivity.py:230
-#: /home/walter/Desktop/cardsort/cardsort.py:41
-msgid "2x2"
-msgstr ""
-
-#: /home/walter/Desktop/cardsort/CardSortActivity.py:71
-#: /home/walter/Desktop/cardsort/CardSortActivity.py:238
-#: /home/walter/Desktop/cardsort/cardsort.py:49
-msgid "3x2"
-msgstr ""
-
-#: /home/walter/Desktop/cardsort/CardSortActivity.py:79
-#: /home/walter/Desktop/cardsort/CardSortActivity.py:246
-#: /home/walter/Desktop/cardsort/cardsort.py:45
-msgid "2x3"
-msgstr ""
-
-#: /home/walter/Desktop/cardsort/CardSortActivity.py:87
-#: /home/walter/Desktop/cardsort/CardSortActivity.py:254
-#: /home/walter/Desktop/cardsort/cardsort.py:53
-msgid "3x3"
-msgstr ""
-
-#: /home/walter/Desktop/cardsort/CardSortActivity.py:98
-#: /home/walter/Desktop/cardsort/CardSortActivity.py:267
-#: /home/walter/Desktop/cardsort/cardsort.py:36
-msgid "click to rotate; drag to swap"
-msgstr ""
-
-#: /home/walter/Desktop/cardsort/CardSortActivity.py:125
-msgid "Project"
-msgstr ""
-
-#: /home/walter/Desktop/cardsort/window.py:122
-#: /home/walter/Desktop/cardsort/window.py:126
-#: /home/walter/Desktop/cardsort/cardsort.py:138
-#: /home/walter/Desktop/cardsort/cardsort.py:142
+#: window.py:118 window.py:122 cardsort.py:133 cardsort.py:137
 msgid "You solved the puzzle."
 msgstr ""
 
-#: /home/walter/Desktop/cardsort/window.py:125
-#: /home/walter/Desktop/cardsort/window.py:132
-#: /home/walter/Desktop/cardsort/cardsort.py:35
-#: /home/walter/Desktop/cardsort/cardsort.py:141
+#: window.py:121 window.py:128 cardsort.py:32 cardsort.py:136
 msgid "CardSort"
 msgstr ""
 
-#: /home/walter/Desktop/cardsort/window.py:129
-#: /home/walter/Desktop/cardsort/window.py:132
+#: window.py:125 window.py:128
 msgid "Keep trying."
+msgstr ""
+
+#: cardsort.py:33 CardSortActivity.py:97 CardSortActivity.py:264
+msgid "click to rotate; drag to swap"
+msgstr ""
+
+#: cardsort.py:38 CardSortActivity.py:62 CardSortActivity.py:227
+msgid "2x2"
+msgstr ""
+
+#: cardsort.py:42 CardSortActivity.py:78 CardSortActivity.py:243
+msgid "2x3"
+msgstr ""
+
+#: cardsort.py:46 CardSortActivity.py:70 CardSortActivity.py:235
+msgid "3x2"
+msgstr ""
+
+#: cardsort.py:50 CardSortActivity.py:86 CardSortActivity.py:251
+msgid "3x3"
+msgstr ""
+
+#: CardSortActivity.py:124
+msgid "Project"
 msgstr ""
