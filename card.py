@@ -1,5 +1,6 @@
-#Copyright (c) 2009-11 Walter Bender
-
+# -*- coding: utf-8 -*-
+# Copyright (c) 2009-11 Walter Bender
+# Copyright (c) 2012 Ignacio Rodríguez
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
@@ -8,17 +9,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this library; if not, write to the Free Software
 # Foundation, 51 Franklin Street, Suite 500 Boston, MA 02110-1335 USA
-
+from gi.repository import Gtk, Gdk, GObject, GdkPixbuf
 import pygtk
 pygtk.require('2.0')
-import gtk
-import gobject
 import os.path
 
 from sprites import Sprite
 
 def load_image(file, w, h):
-    return gtk.gdk.pixbuf_new_from_file_at_size(file, int(w), int(h))
+    return GdkPixbuf.Pixbuf.new_from_file_at_size(file, int(w), int(h))
 
 #
 # class for defining individual cards

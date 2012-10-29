@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-
-#Copyright (c) 2009-11 Walter Bender
-
+# -*- coding: utf-8 -*-
+# Copyright (c) 2009-11 Walter Bender
+# Copyright (c) 2012 Ignacio Rodríguez
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 3 of the License, or
@@ -10,10 +10,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this library; if not, write to the Free Software
 # Foundation, 51 Franklin Street, Suite 500 Boston, MA 02110-1335 USA
-
+from gi.repository import Gdk, Gtk, GdkPixbuf, GObject
 import pygtk
 pygtk.require('2.0')
-import gtk
 
 from gettext import gettext as _
 import os.path
@@ -27,27 +26,27 @@ class CardSortMain:
         self.r = 0
         self.tw = None
         # create a new window
-        self.win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+        self.win = Gtk.Window(Gdk.WindowType.TOPLEVEL)
         self.win.maximize()
         self.win.set_title(_("CardSort") + ": " + 
                            _("click to rotate; drag to swap"))
         self.win.connect("delete_event", lambda w,e: gtk.main_quit())
 
-        menu = gtk.Menu()
+        menu = Gtk.Menu()
 
-        menu_items = gtk.MenuItem(_("2x2"))
+        menu_items = Gtk.MenuItem(_("2x2"))
         menu.append(menu_items)
         menu_items.connect("activate", self._grid2x2_cb)
         menu_items.show()
-        menu_items = gtk.MenuItem(_("2x3"))
+        menu_items = Gtk.MenuItem(_("2x3"))
         menu.append(menu_items)
         menu_items.connect("activate", self._grid2x3_cb)
         menu_items.show()
-        menu_items = gtk.MenuItem(_("3x2"))
+        menu_items = Gtk.MenuItem(_("3x2"))
         menu.append(menu_items)
         menu_items.connect("activate", self._grid3x2_cb)
         menu_items.show()
-        menu_items = gtk.MenuItem(_("3x3"))
+        menu_items = Gtk.MenuItem(_("3x3"))
         menu.append(menu_items)
         menu_items.connect("activate", self._grid3x3_cb)
         menu_items.show()
@@ -59,21 +58,21 @@ class CardSortMain:
         menu_items.show()
         """
 
-        root_menu = gtk.MenuItem("Tools")
+        root_menu = Gtk.MenuItem("Tools")
         root_menu.show()
         root_menu.set_submenu(menu)
 
         # A vbox to put a menu and the canvas in:
-        vbox = gtk.VBox(False, 0)
+        vbox = Gtk.VBox(False, 0)
         self.win.add(vbox)
         vbox.show()
 
-        menu_bar = gtk.MenuBar()
+        menu_bar = Gtk.MenuBar()
         vbox.pack_start(menu_bar, False, False, 2)
         menu_bar.show()
 
-        canvas = gtk.DrawingArea()
-        vbox.pack_end(canvas, True, True)
+        canvas = Gtk.DrawingArea()
+        vbox.pack_end(canvas, True, True, 3)
         canvas.show()
 
         menu_bar.append(root_menu)
@@ -164,7 +163,7 @@ class Permutation:
                  self._sofar.pop() 
 
 def main():
-    gtk.main()
+    Gtk.main()
     return 0
 
 if __name__ == "__main__":
