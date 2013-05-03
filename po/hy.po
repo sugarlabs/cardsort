@@ -1,0 +1,59 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-10-29 08:23-0400\n"
+"PO-Revision-Date: 2013-04-22 22:34+0200\n"
+"Last-Translator: anushnur <anush.mkrtchyan@ca1492.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: hy\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Pootle 2.0.5\n"
+
+#. TRANS: "name" option from activity.info file
+msgid "Card Sort"
+msgstr "Քարտերի Դասավորում"
+
+#. TRANS: "summary" option from activity.info file
+#. TRANS: "description" option from activity.info file
+msgid "a pattern matching game"
+msgstr "անխշանկարների համապատասխանեցման խաղ"
+
+#: CardSortActivity.py:57 cardsort.py:37
+msgid "2x2"
+msgstr " 2x2"
+
+#: CardSortActivity.py:62 cardsort.py:45
+msgid "3x2"
+msgstr "3x2"
+
+#: CardSortActivity.py:67 cardsort.py:41
+msgid "2x3"
+msgstr "2x3"
+
+#: CardSortActivity.py:72 cardsort.py:49
+msgid "3x3"
+msgstr "3x3"
+
+#: CardSortActivity.py:79 cardsort.py:32
+msgid "click to rotate; drag to swap"
+msgstr "Քլիք անել պտտեցնելու համար, քաշել փոխելու համար"
+
+#: cardsort.py:31 cardsort.py:135 window.py:117 window.py:124
+msgid "CardSort"
+msgstr "Քարտերի Դասավորում"
+
+#: cardsort.py:132 cardsort.py:136 window.py:114 window.py:118
+msgid "You solved the puzzle."
+msgstr "Դու լուծեցիր գլուխկոտրուկը"
+
+#: window.py:121 window.py:124
+msgid "Keep trying."
+msgstr "Շարունակիր փորձել"
