@@ -1,6 +1,6 @@
 [Activity]
 name = Card Sort
-activity_version = 9
+activity_version = 11
 license = GPLv3
 bundle_id = org.sugarlabs.CardSortActivity
 exec = sugar-activity CardSortActivity.CardSortActivity
