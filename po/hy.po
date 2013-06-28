@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-10-29 08:23-0400\n"
-"PO-Revision-Date: 2013-04-22 22:34+0200\n"
-"Last-Translator: anushnur <anush.mkrtchyan@ca1492.com>\n"
+"PO-Revision-Date: 2013-06-28 21:52+0200\n"
+"Last-Translator: Chris <cjl@laptop.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: hy\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgstr "անխշանկարների համապատասխանեցման խաղ"
 
 #: CardSortActivity.py:57 cardsort.py:37
 msgid "2x2"
-msgstr " 2x2"
+msgstr "2x2"
 
 #: CardSortActivity.py:62 cardsort.py:45
 msgid "3x2"
