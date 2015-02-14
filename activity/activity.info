@@ -7,4 +7,4 @@ exec = sugar-activity CardSortActivity.CardSortActivity
 icon = activity-cardsort
 show_launcher = yes
 summary = a pattern matching game
-
+category = game
