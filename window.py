@@ -9,18 +9,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this library; if not, write to the Free Software
 # Foundation, 51 Franklin Street, Suite 500 Boston, MA 02110-1335 USA
+
 from gi.repository import Gtk, Gdk
-import pygtk
-pygtk.require('2.0')
+
 from gettext import gettext as _
 
 from sugar3.graphics import style
-GRID_CELL_SIZE = style.GRID_CELL_SIZE
 
 from grid import Grid
 from sprites import Sprites
 from math import sqrt
 
+GRID_CELL_SIZE = style.GRID_CELL_SIZE
 CARD_DIM = 135
 
 #

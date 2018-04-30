@@ -11,10 +11,7 @@
 # Foundation, 51 Franklin Street, Suite 500 Boston, MA 02110-1335 USA
 
 from gi.repository import Gtk, Gdk, GObject
-import pygtk
-pygtk.require('2.0')
 
-import sugar3
 from sugar3.activity import activity
 from sugar3.bundle.activitybundle import ActivityBundle
 from sugar3.activity.widgets import ActivityToolbarButton

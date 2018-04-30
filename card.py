@@ -9,10 +9,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this library; if not, write to the Free Software
 # Foundation, 51 Franklin Street, Suite 500 Boston, MA 02110-1335 USA
+
 from gi.repository import Gtk, Gdk, GObject, GdkPixbuf
-import pygtk
-pygtk.require('2.0')
-import os.path
 
 from sprites import Sprite
 
