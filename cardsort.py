@@ -11,10 +11,13 @@
 # along with this library; if not, write to the Free Software
 # Foundation, 51 Franklin Street, Suite 500 Boston, MA 02110-1335 USA
 
+import os.path
+import gi
+gi.require_version('Gtk', '3.0')
+
 from gi.repository import Gdk, Gtk, GdkPixbuf, GObject
 
 from gettext import gettext as _
-import os.path
 
 from window import Game
 from orientation import get_rotation_sets
