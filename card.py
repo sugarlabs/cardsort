@@ -10,6 +10,8 @@
 # along with this library; if not, write to the Free Software
 # Foundation, 51 Franklin Street, Suite 500 Boston, MA 02110-1335 USA
 
+import os.path
+
 from gi.repository import Gtk, Gdk, GObject, GdkPixbuf
 
 from sprites import Sprite
