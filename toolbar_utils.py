@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2011, Walter Bender
-# Ignacio Rodriguez <ignaciorodriguez@sugarlabs.org>
+# Copyright (C) 2011, Walter Bender
+# Copyright (C) Ignacio Rodriguez <ignaciorodriguez@sugarlabs.org>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
