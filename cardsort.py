@@ -18,10 +18,8 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 import os.path
-import gi
-gi.require_version('Gtk', '3.0')
 
-from gi.repository import Gdk, Gtk, GdkPixbuf, GObject
+from gi.repository import Gdk, Gtk
 
 from gettext import gettext as _
 
@@ -38,7 +36,7 @@ class CardSortMain:
         self.win.maximize()
         self.win.set_title(_("CardSort") + ": " + 
                            _("click to rotate; drag to swap"))
-        self.win.connect("delete_event", lambda w,e: gtk.main_quit())
+        self.win.connect("delete_event", lambda w,e: Gtk.main_quit())
 
         menu = Gtk.Menu()
 
@@ -60,7 +58,7 @@ class CardSortMain:
         menu_items.show()
 
         """
-        menu_items = gtk.MenuItem(_("Solve it"))
+        menu_items = Gtk.MenuItem(_("Solve it"))
         menu.append(menu_items)
         menu_items.connect("activate", self._solve_cb)
         menu_items.show()

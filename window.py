@@ -28,7 +28,6 @@ from grid import Grid
 from sprites import Sprites
 from math import sqrt
 
-GRID_CELL_SIZE = style.GRID_CELL_SIZE
 CARD_DIM = 135
 
 #
@@ -58,7 +57,7 @@ class Game():
         self.canvas.connect("button-press-event", self._button_press_cb)
         self.canvas.connect("button-release-event", self._button_release_cb)
         self.width = Gdk.Screen.width()
-        self.height = Gdk.Screen.height()-GRID_CELL_SIZE
+        self.height = Gdk.Screen.height()- style.GRID_CELL_SIZE
         self.card_dim = CARD_DIM
         self.scale = 0.8 * self.height / (self.card_dim * 3)
     
