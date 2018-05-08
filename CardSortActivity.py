@@ -90,7 +90,6 @@ class CardSortActivity(activity.Activity):
 
 	# The ever-present Stop Button
 	stop_button = StopButton(self)
-	stop_button.props.accelerator = '<Ctrl>Q'
 	toolbar_box.toolbar.insert(stop_button, -1)
 	stop_button.show()
 
