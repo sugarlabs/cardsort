@@ -1,3 +1,9 @@
+* New translations,
+* Fix metadata (categories, screenshots, copyright),
+* Reformat source code to fit flake8,
+* Remove unnecessary stop button accelerator in favour of toolkit default,
+* Update POT file.
+
 11
 
 * New translations
