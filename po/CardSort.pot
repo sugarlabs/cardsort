@@ -8,51 +8,51 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-29 08:23-0400\n"
+"POT-Creation-Date: 2018-05-08 11:12+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#. TRANS: "name" option from activity.info file
+#: activity/activity.info:2
 msgid "Card Sort"
 msgstr ""
 
-#. TRANS: "summary" option from activity.info file
-#. TRANS: "description" option from activity.info file
+#: activity/activity.info:3
 msgid "a pattern matching game"
 msgstr ""
 
-#: CardSortActivity.py:57 cardsort.py:37
+#: CardSortActivity.py:55 cardsort.py:43
 msgid "2x2"
 msgstr ""
 
-#: CardSortActivity.py:62 cardsort.py:45
+#: CardSortActivity.py:60 cardsort.py:51
 msgid "3x2"
 msgstr ""
 
-#: CardSortActivity.py:67 cardsort.py:41
+#: CardSortActivity.py:65 cardsort.py:47
 msgid "2x3"
 msgstr ""
 
-#: CardSortActivity.py:72 cardsort.py:49
+#: CardSortActivity.py:70 cardsort.py:55
 msgid "3x3"
 msgstr ""
 
-#: CardSortActivity.py:79 cardsort.py:32
+#: CardSortActivity.py:77 cardsort.py:38
 msgid "click to rotate; drag to swap"
 msgstr ""
 
-#: cardsort.py:31 cardsort.py:135 window.py:117 window.py:124
+#: cardsort.py:37 cardsort.py:141 window.py:123 window.py:130
 msgid "CardSort"
 msgstr ""
 
-#: cardsort.py:132 cardsort.py:136 window.py:114 window.py:118
+#: cardsort.py:138 cardsort.py:142 window.py:120 window.py:124
 msgid "You solved the puzzle."
 msgstr ""
 
-#: window.py:121 window.py:124
+#: window.py:127 window.py:130
 msgid "Keep trying."
 msgstr ""
