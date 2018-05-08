@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-10-29 08:23-0400\n"
-"PO-Revision-Date: 2016-12-22 20:13+0000\n"
+"PO-Revision-Date: 2018-02-03 21:18+0000\n"
 "Last-Translator: Besnik_b <besnik@programeshqip.org>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: sq\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.5.1.1\n"
-"X-POOTLE-MTIME: 1482437632.000000\n"
+"X-POOTLE-MTIME: 1517692680.000000\n"
 
 #. TRANS: "name" option from activity.info file
 msgid "Card Sort"
@@ -50,7 +50,7 @@ msgstr "klikoni që të rrotullohet, tërhiqeni që të këmbehet"
 
 #: cardsort.py:31 cardsort.py:135 window.py:117 window.py:124
 msgid "CardSort"
-msgstr ""
+msgstr "CardSort"
 
 #: cardsort.py:132 cardsort.py:136 window.py:114 window.py:118
 msgid "You solved the puzzle."
