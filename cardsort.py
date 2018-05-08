@@ -34,9 +34,9 @@ class CardSortMain:
         # create a new window
         self.win = Gtk.Window(Gdk.WindowType.TOPLEVEL)
         self.win.maximize()
-        self.win.set_title(_("CardSort") + ": " + 
+        self.win.set_title(_("CardSort") + ": " +
                            _("click to rotate; drag to swap"))
-        self.win.connect("delete_event", lambda w,e: Gtk.main_quit())
+        self.win.connect("delete-event", lambda w, e: Gtk.main_quit())
 
         menu = Gtk.Menu()
 
@@ -114,59 +114,63 @@ class CardSortMain:
 
     def _solve_cb(self, widget):
         self.show_all()
-        self.set_grid([0,1,2,3,4,5,6,7,8])
-        self.set_orientations([0,0,0,0,0,0,0,0,0])
+        self.set_grid([0, 1, 2, 3, 4, 5, 6, 7, 8])
+        self.set_orientations([0, 0, 0, 0, 0, 0, 0, 0, 0])
         self.rotation_sets = get_rotation_sets()
         counter = 0
-        a = [0,1,2,3,4,5,6,7,8]
+        a = [0, 1, 2, 3, 4, 5, 6, 7, 8]
         for i in Permutation(a):
             if self.test(i) is True:
                 return True
             counter += 1
-            if (counter/1000)*1000 == counter:
+            if (counter / 1000) * 1000 == counter:
                 print str(counter) + ": " + str(self.game.grid.grid)
         print "no solution found :("
         return True
 
-    def test(self,g):
+    def test(self, g):
         self.game.grid.grid = g
         for o in range(64):
             for r in range(9):
                 self.game.grid.card_table[self.game.grid.grid.index(r)]\
-                    .set_orientation(self.rotation_sets[o][r],False)
+                    .set_orientation(self.rotation_sets[o][r], False)
             if self.game.test() is True:
                 print _("You solved the puzzle.")
                 self.game.grid.print_grid()
                 self.game.grid.print_orientations()
-                self.game.win.set_title(_("CardSort") + ": " + \
-                                      _("You solved the puzzle."))
+                self.game.win.set_title(_("CardSort") + ": " +
+                                        _("You solved the puzzle."))
                 self.game.grid.reset3x3(self.game)
                 self.game.grid.set_grid(g)
                 for r in range(9):
                     self.game.grid.card_table[self.game.grid.grid.index(r)]\
-                        .set_orientation(self.rotation_sets[o][r],True)
+                        .set_orientation(self.rotation_sets[o][r], True)
                 self.game.grid.print_grid()
                 self.game.grid.print_orientations()
                 self.game.sprites.redraw_sprites()
                 return True
         return False
 
-class Permutation: 
-    def __init__(self, justalist): 
-        self._data = justalist[:] 
-        self._sofar = [] 
-    def __iter__(self): 
-        return self.next() 
-    def next(self): 
-         for elem in self._data: 
-             if elem not in self._sofar: 
-                 self._sofar.append(elem) 
-                 if len(self._sofar) == len(self._data): 
-                     yield self._sofar[:] 
-                 else: 
-                     for v in self.next(): 
-                         yield v 
-                 self._sofar.pop() 
+
+class Permutation:
+    def __init__(self, justalist):
+        self._data = justalist[:]
+        self._sofar = []
+
+    def __iter__(self):
+        return self.next()
+
+    def next(self):
+        for elem in self._data:
+            if elem not in self._sofar:
+                self._sofar.append(elem)
+                if len(self._sofar) == len(self._data):
+                    yield self._sofar[:]
+                else:
+                    for v in self.next():
+                        yield v
+                self._sofar.pop()
+
 
 def main():
     Gtk.main()

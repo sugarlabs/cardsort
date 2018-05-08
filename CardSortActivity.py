@@ -18,24 +18,16 @@
 
 import gi
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk, Gdk, GObject
+from gi.repository import Gtk, Gdk
 
 from sugar3.activity import activity
-from sugar3.bundle.activitybundle import ActivityBundle
 from sugar3.activity.widgets import ActivityToolbarButton
 from sugar3.activity.widgets import StopButton
 from sugar3.graphics.toolbarbox import ToolbarBox
-from sugar3.graphics.toolbarbox import ToolbarButton
-from sugar3.graphics.toolbutton import ToolButton
-from sugar3.graphics.menuitem import MenuItem
-from sugar3.graphics.icon import Icon
-from sugar3.datastore import datastore
 
 from gettext import gettext as _
-import locale
 import os.path
 
-from sprites import *
 from toolbar_utils import radio_factory, label_factory, separator_factory
 from window import Game
 
@@ -43,44 +35,45 @@ SERVICE = 'org.sugarlabs.CardSortActivity'
 IFACE = SERVICE
 PATH = '/org/augarlabs/CardSortActivity'
 
+
 #
 # Sugar activity
 #
 class CardSortActivity(activity.Activity):
 
     def __init__(self, handle):
-        super(CardSortActivity,self).__init__(handle)
+        super(CardSortActivity, self).__init__(handle)
 
-	toolbar_box = ToolbarBox()
-	activity_button = ActivityToolbarButton(self)
-	toolbar_box.toolbar.insert(activity_button, 0)
-	activity_button.show()
+        toolbar_box = ToolbarBox()
+        activity_button = ActivityToolbarButton(self)
+        toolbar_box.toolbar.insert(activity_button, 0)
+        activity_button.show()
 
         self.grid2x2 = radio_factory('2x2on',
                                      toolbar_box.toolbar,
                                      self._grid2x2_cb,
                                      tooltip=_('2x2'),
-                                     group = None)
+                                     group=None)
         self.grid3x2 = radio_factory('3x2on',
                                      toolbar_box.toolbar,
                                      self._grid3x2_cb,
                                      tooltip=_('3x2'),
-                                     group = self.grid2x2)
+                                     group=self.grid2x2)
         self.grid2x3 = radio_factory('2x3on',
                                      toolbar_box.toolbar,
                                      self._grid2x3_cb,
                                      tooltip=_('2x3'),
-                                     group = self.grid2x2)
+                                     group=self.grid2x2)
         self.grid3x3 = radio_factory('3x3on',
                                      toolbar_box.toolbar,
                                      self._grid3x3_cb,
                                      tooltip=_('3x3'),
-                                     group = self.grid2x2)
+                                     group=self.grid2x2)
 
         separator_factory(toolbar_box.toolbar,
                           visible=False)
 
-	self.results_label = label_factory(toolbar_box.toolbar,
+        self.results_label = label_factory(toolbar_box.toolbar,
                                            _("click to rotate; drag to swap"),
                                            width=300)
 
@@ -88,15 +81,15 @@ class CardSortActivity(activity.Activity):
                           expand=True,
                           visible=False)
 
-	# The ever-present Stop Button
-	stop_button = StopButton(self)
-	toolbar_box.toolbar.insert(stop_button, -1)
-	stop_button.show()
+        # The ever-present Stop Button
+        stop_button = StopButton(self)
+        toolbar_box.toolbar.insert(stop_button, -1)
+        stop_button.show()
 
-	self.set_toolbar_box(toolbar_box)
-	toolbar_box.show()
+        self.set_toolbar_box(toolbar_box)
+        toolbar_box.show()
 
-         # Create a canvas
+        # Create a canvas
         canvas = Gtk.DrawingArea()
         canvas.set_size_request(Gdk.Screen.width(),
                                 Gdk.Screen.height())
@@ -106,7 +99,7 @@ class CardSortActivity(activity.Activity):
 
         # Initialize the canvas
         self.game = Game(canvas, os.path.join(
-                activity.get_bundle_path(), 'images'), self)
+            activity.get_bundle_path(), 'images'), self)
 
         # Read the mode from the Journal
         try:
@@ -121,7 +114,6 @@ class CardSortActivity(activity.Activity):
         except:
             self.metadata['grid'] = "2x2"
             self.show_grid2x2()
-
 
     #
     # Grid resize callbacks
@@ -167,4 +159,3 @@ class CardSortActivity(activity.Activity):
     """
     def write_file(self, file_path):
         pass
-

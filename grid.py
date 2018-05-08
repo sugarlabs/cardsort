@@ -16,15 +16,14 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-from gi.repository import Gtk, Gdk, GObject
 import os.path
 
 from random import uniform
 from sprites import Sprite
 from card import Card, load_image
 
-CARD_DEFS = ((1, 3, -2, -3), (2, 3, -3, -2), (2, 3, -4, -4), 
-             (2, 1, -1, -4), (3, 4, -4, -3), (4, 2, -1, -2), 
+CARD_DEFS = ((1, 3, -2, -3), (2, 3, -3, -2), (2, 3, -4, -4),
+             (2, 1, -1, -4), (3, 4, -4, -3), (4, 2, -1, -2),
              (1, 1, -2, -4), (4, 2, -3, -4), (1, 3, -1, -2))
 
 
@@ -48,7 +47,7 @@ class Grid:
         self.d = int(game.card_dim * game.scale)
         self.s = game.scale
         # Initialize the cards
-        i = 0 # i is used as a label on the sprite
+        i = 0  # i is used as a label on the sprite
         for c in CARD_DEFS:
             x, y = self.i_to_xy(i)
             self.card_table.append(Card(game, c, i, x, y))
@@ -72,22 +71,22 @@ class Grid:
     # Utility functions
     def i_to_xy(self, i):
         return int((self.w - (self.d * 3)) / 2) + (i % 3) * self.d, \
-               int((self.h - (self.d * 3)) / 2) + int(i / 3) * self.d
+            int((self.h - (self.d * 3)) / 2) + int(i / 3) * self.d
 
     def mh_to_xy(self, i):
-        return int((self.w - (self.d * 3)) / 2 + \
-                       ((i % 2) + 1) * self.d - 60 * self.s), \
-               int((self.h - (self.d * 3)) / 2 + \
-                       (int(i / 2) + .5) * self.d - 24 * self.s)
+        return int((self.w - (self.d * 3)) / 2 +
+                   ((i % 2) + 1) * self.d - 60 * self.s), \
+            int((self.h - (self.d * 3)) / 2 +
+                (int(i / 2) + .5) * self.d - 24 * self.s)
 
     def mv_to_xy(self, i):
-        return int((self.w - (self.d * 3)) / 2 + \
-                       ((i % 3) + .5) * self.d - 24 * self.s), \
-               int((self.h - (self.d * 3)) / 2 + \
-                       (int(i / 3) + 1) * self.d - 60 * self.s)
+        return int((self.w - (self.d * 3)) / 2 +
+                   ((i % 3) + .5) * self.d - 24 * self.s), \
+            int((self.h - (self.d * 3)) / 2 +
+                (int(i / 3) + 1) * self.d - 60 * self.s)
 
     def xy_to_i(self, x, y):
-        return (x - int((self.w - (self.d * 3)) / 2)) / self.d  + \
+        return (x - int((self.w - (self.d * 3)) / 2)) / self.d + \
                ((y - int((self.h - (self.d * 3)) / 2)) / self.d) * 3
 
     def set_orientation(self, neworientation, draw_card=True):
@@ -203,14 +202,14 @@ class Grid:
     # print the grid orientations
     def print_orientations(self):
         print self.card_table[self.grid[0]].orientation, \
-              self.card_table[self.grid[1]].orientation, \
-              self.card_table[self.grid[2]].orientation 
+            self.card_table[self.grid[1]].orientation, \
+            self.card_table[self.grid[2]].orientation
         print self.card_table[self.grid[3]].orientation, \
-              self.card_table[self.grid[4]].orientation, \
-              self.card_table[self.grid[5]].orientation 
+            self.card_table[self.grid[4]].orientation, \
+            self.card_table[self.grid[5]].orientation
         print self.card_table[self.grid[6]].orientation, \
-              self.card_table[self.grid[7]].orientation, \
-              self.card_table[self.grid[8]].orientation 
+            self.card_table[self.grid[7]].orientation, \
+            self.card_table[self.grid[8]].orientation
         return
 
     # Test all relevant borders, ignoring edges
@@ -322,4 +321,3 @@ class Grid:
                self.card_table[self.grid[i + 3]].north != 0:
                 return False
         return True
-

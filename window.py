@@ -28,48 +28,49 @@ from math import sqrt
 
 CARD_DIM = 135
 
+
 #
-# handle launch from both within and without of Sugar environment 
+# handle launch from both within and without of Sugar environment
 #
 class Game():
 
     def __init__(self, canvas, path, parent=None):
         self.activity = parent
         self.path = path
-    
+
         # starting from command line
         # we have to do all the work that was done in CardSortActivity.py
         if parent is None:
             self.sugar = False
             self.canvas = canvas
-    
+
         # starting from Sugar
         else:
             self.sugar = True
             self.canvas = canvas
             parent.show_all()
-    
+
         self.canvas.add_events(Gdk.EventMask.BUTTON_PRESS_MASK)
         self.canvas.add_events(Gdk.EventMask.BUTTON_RELEASE_MASK)
         self.canvas.connect("draw", self.__draw_cb)
         self.canvas.connect("button-press-event", self._button_press_cb)
         self.canvas.connect("button-release-event", self._button_release_cb)
         self.width = Gdk.Screen.width()
-        self.height = Gdk.Screen.height()- style.GRID_CELL_SIZE
+        self.height = Gdk.Screen.height() - style.GRID_CELL_SIZE
         self.card_dim = CARD_DIM
         self.scale = 0.8 * self.height / (self.card_dim * 3)
-    
+
         # Initialize the sprite repository
         self.sprites = Sprites(self.canvas)
-    
+
         # Initialize the grid
         self.grid = Grid(self)
-    
+
         # Start solving the puzzle
         self.press = -1
         self.release = -1
         self.start_drag = [0, 0]
-    
+
     #
     # Button press
     #
@@ -78,7 +79,7 @@ class Game():
         x, y = map(int, event.get_coords())
         self.start_drag = [x, y]
         self.grid.hide_masks()
-        spr = self.sprites.find_sprite((x,y))
+        spr = self.sprites.find_sprite((x, y))
         if spr is None:
             self.press = -1
             self.release = -1
@@ -86,7 +87,7 @@ class Game():
         # take note of card under button press
         self.press = int(spr.labels[0])
         return True
-    
+
     #
     # Button release
     #
@@ -109,18 +110,18 @@ class Game():
                 # self.grid.card_table[self.press].print_card()
         # if different card (drag) then swap
         else:
-            self.grid.swap(self.press,self.release)
+            self.grid.swap(self.press, self.release)
             # self.grid.print_grid()
         self.press = -1
         self.release = -1
-        if self.test() == True:
+        if self.test() is True:
             if self.sugar is True:
                 self.activity.results_label.set_text(
                     _("You solved the puzzle."))
                 self.activity.results_label.show()
             else:
-                self.win.set_title(_("CardSort") + ": " + \
-                                    _("You solved the puzzle."))
+                self.win.set_title(_("CardSort") + ": " +
+                                   _("You solved the puzzle."))
         else:
             if self.sugar is True:
                 self.activity.results_label.set_text(_("Keep trying."))
@@ -128,7 +129,7 @@ class Game():
             else:
                 self.win.set_title(_("CardSort") + ": " + _("Keep trying."))
         return True
-    
+
     #
     # Measure length of drag between button press and button release
     #
@@ -141,8 +142,8 @@ class Game():
     # Repaint
     #
     def __draw_cb(self, canvas, cr):
-		self.sprites.redraw_sprites(cr=cr)
-    
+                self.sprites.redraw_sprites(cr=cr)
+
     def do_expose_event(self, event):
         ''' Handle the expose-event by drawing '''
         # Restrict Cairo to the exposed area
@@ -152,7 +153,7 @@ class Game():
         cr.clip()
         # Refresh sprite list
         self.sprites.redraw_sprites(cr=cr)
-    
+
     #
     # callbacks
     #

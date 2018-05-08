@@ -22,8 +22,10 @@ from gi.repository import GdkPixbuf
 
 from sprites import Sprite
 
+
 def load_image(file, w, h):
     return GdkPixbuf.Pixbuf.new_from_file_at_size(file, int(w), int(h))
+
 
 #
 # class for defining individual cards
@@ -41,8 +43,8 @@ class Card:
         self.orientation = 0
         self.images = []
         self.images.append(load_image(
-                os.path.join(game.path, 'card%d.svg' % (i)),
-                game.card_dim * game.scale, game.card_dim * game.scale))
+            os.path.join(game.path, 'card%d.svg' % (i)),
+            game.card_dim * game.scale, game.card_dim * game.scale))
         for j in range(3):
             self.images.append(self.images[j].rotate_simple(90))
         # create sprite from svg file
@@ -57,7 +59,7 @@ class Card:
         while r != self.orientation:
             self.rotate_ccw(rotate_spr)
 
-    def rotate_ccw(self,rotate_spr=True):
+    def rotate_ccw(self, rotate_spr=True):
         # print "rotating card " + str(self.spr.label)
         tmp = self.north
         self.north = self.east
@@ -75,4 +77,3 @@ class Card:
               "," + str(self.south) + "," + str(self.west) + \
               ") " + str(self.rotate) + "ccw" + \
               " x:" + str(self.spr.x) + " y:" + str(self.spr.y)
-

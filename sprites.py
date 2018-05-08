@@ -78,12 +78,13 @@ def svg_str_to_pixbuf(svg_string):
 
 import gi
 gi.require_version('PangoCairo', '1.0')
-from gi.repository import Gtk, GdkPixbuf, Gdk
+from gi.repository import GdkPixbuf, Gdk
 from gi.repository import Pango, PangoCairo
 import cairo
 
 
 class Sprites:
+
     ''' A class for the list of sprites and everything they share in common '''
 
     def __init__(self, widget):
@@ -98,7 +99,7 @@ class Sprites:
 
     def get_sprite(self, i):
         ''' Return a sprint from the array '''
-        if i < 0 or i > len(self.list)-1:
+        if i < 0 or i > len(self.list) - 1:
             return(None)
         else:
             return(self.list[i])
@@ -145,7 +146,7 @@ class Sprites:
             print 'sprites.redraw_sprites: no Cairo context'
             return
         for spr in self.list:
-            if area == None:
+            if area is None:
                 spr.draw(cr=cr)
             else:
                 intersection = spr.rect.intersect(area)
@@ -154,6 +155,7 @@ class Sprites:
 
 
 class Sprite:
+
     ''' A class for the individual sprites '''
 
     def __init__(self, sprites, x, y, image):
@@ -382,7 +384,7 @@ class Sprite:
             if w > my_width:
                 if self._rescale[i]:
                     self._fd.set_size(
-                            int(self._scale[i] * Pango.SCALE * my_width / w))
+                        int(self._scale[i] * Pango.SCALE * my_width / w))
                     pl.set_font_description(self._fd)
                     w = pl.get_size()[0] / Pango.SCALE
                 else:
@@ -400,7 +402,7 @@ class Sprite:
                 x = int(self.rect[0] + self._margins[0] + (my_width - w) / 2)
             elif self._horiz_align[i] == 'left':
                 x = int(self.rect[0] + self._margins[0])
-            else: # right
+            else:  # right
                 x = int(self.rect[0] + self.rect[2] - w - self._margins[2])
             h = pl.get_size()[1] / Pango.SCALE
             if self._y_pos[i] is not None:
@@ -409,7 +411,7 @@ class Sprite:
                 y = int(self.rect[1] + self._margins[1] + (my_height - h) / 2)
             elif self._vert_align[i] == "top":
                 y = int(self.rect[1] + self._margins[1])
-            else: # bottom
+            else:  # bottom
                 y = int(self.rect[1] + self.rect[3] - h - self._margins[3])
             cr.save()
             cr.translate(x, y)
@@ -457,7 +459,7 @@ class Sprite:
             if array is not None:
                 offset = (y * self.images[i].get_width() + x) * 4
                 r, g, b, a = ord(array[offset]), ord(array[offset + 1]),\
-                             ord(array[offset + 2]), ord(array[offset + 3])
+                    ord(array[offset + 2]), ord(array[offset + 3])
                 return(r, g, b, a)
             else:
                 return(-1, -1, -1, -1)
