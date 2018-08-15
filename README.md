@@ -6,11 +6,11 @@ Card Sort is a puzzle; sort the tiles so the intersections have black and white 
 How to use?
 ===========
 
-Card Sort is part of the Sugar desktop.  Please refer to;
+Card Sort is not part of the Sugar desktop, but can be added.  Please refer to;
 
 * [How to Get Sugar on sugarlabs.org](https://sugarlabs.org/),
 * [How to use Sugar](https://help.sugarlabs.org/),
-* [Download Card Sort using Browse](https://activities.sugarlabs.org/), search for `Card Sort`, then download, and;
+* [Download Card Sort using Browse](https://activities.sugarlabs.org/), search for `Card Sort`, then download.
 
 How to upgrade?
 ===============
