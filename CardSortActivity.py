@@ -91,8 +91,6 @@ class CardSortActivity(activity.Activity):
 
         # Create a canvas
         canvas = Gtk.DrawingArea()
-        canvas.set_size_request(Gdk.Screen.width(),
-                                Gdk.Screen.height())
         self.set_canvas(canvas)
         canvas.show()
         self.show_all()
