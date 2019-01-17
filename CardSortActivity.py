@@ -33,7 +33,7 @@ from window import Game
 
 SERVICE = 'org.sugarlabs.CardSortActivity'
 IFACE = SERVICE
-PATH = '/org/augarlabs/CardSortActivity'
+PATH = '/org/sugarlabs/CardSortActivity'
 
 
 #
