@@ -194,22 +194,22 @@ class Grid:
 
     # print the grid
     def print_grid(self):
-        print self.grid[0:3]
-        print self.grid[3:6]
-        print self.grid[6:9]
+        print((self.grid[0:3]))
+        print((self.grid[3:6]))
+        print((self.grid[6:9]))
         return
 
     # print the grid orientations
     def print_orientations(self):
-        print self.card_table[self.grid[0]].orientation, \
+        print((self.card_table[self.grid[0]].orientation, \
             self.card_table[self.grid[1]].orientation, \
-            self.card_table[self.grid[2]].orientation
-        print self.card_table[self.grid[3]].orientation, \
+            self.card_table[self.grid[2]].orientation))
+        print((self.card_table[self.grid[3]].orientation, \
             self.card_table[self.grid[4]].orientation, \
-            self.card_table[self.grid[5]].orientation
-        print self.card_table[self.grid[6]].orientation, \
+            self.card_table[self.grid[5]].orientation))
+        print((self.card_table[self.grid[6]].orientation, \
             self.card_table[self.grid[7]].orientation, \
-            self.card_table[self.grid[8]].orientation
+            self.card_table[self.grid[8]].orientation))
         return
 
     # Test all relevant borders, ignoring edges
