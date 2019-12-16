@@ -73,7 +73,7 @@ class Card:
             self.spr.set_shape(self.images[int(self.orientation / 90)])
 
     def print_card(self):
-        print "(" + str(self.north) + "," + str(self.east) + \
+        print("(" + str(self.north) + "," + str(self.east) + \
               "," + str(self.south) + "," + str(self.west) + \
               ") " + str(self.rotate) + "ccw" + \
-              " x:" + str(self.spr.x) + " y:" + str(self.spr.y)
+              " x:" + str(self.spr.x) + " y:" + str(self.spr.y))

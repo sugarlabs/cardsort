@@ -18,7 +18,9 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 import os.path
-
+import gi
+gi.require_version('Gtk', '3.0')
+gi.require_version('Gdk', '3.0')
 from gi.repository import Gdk, Gtk
 
 from gettext import gettext as _
@@ -124,8 +126,8 @@ class CardSortMain:
                 return True
             counter += 1
             if (counter / 1000) * 1000 == counter:
-                print str(counter) + ": " + str(self.game.grid.grid)
-        print "no solution found :("
+                print(str(counter) + ": " + str(self.game.grid.grid))
+        print("no solution found :(")
         return True
 
     def test(self, g):
@@ -135,7 +137,7 @@ class CardSortMain:
                 self.game.grid.card_table[self.game.grid.grid.index(r)]\
                     .set_orientation(self.rotation_sets[o][r], False)
             if self.game.test() is True:
-                print _("You solved the puzzle.")
+                print(_("You solved the puzzle."))
                 self.game.grid.print_grid()
                 self.game.grid.print_orientations()
                 self.game.win.set_title(_("CardSort") + ": " +
@@ -158,16 +160,16 @@ class Permutation:
         self._sofar = []
 
     def __iter__(self):
-        return self.next()
+        return next(self)
 
-    def next(self):
+    def __next__(self):
         for elem in self._data:
             if elem not in self._sofar:
                 self._sofar.append(elem)
                 if len(self._sofar) == len(self._data):
                     yield self._sofar[:]
                 else:
-                    for v in self.next():
+                    for v in next(self):
                         yield v
                 self._sofar.pop()
 
