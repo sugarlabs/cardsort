@@ -137,7 +137,7 @@ class CardSortMain:
                 self.game.grid.card_table[self.game.grid.grid.index(r)]\
                     .set_orientation(self.rotation_sets[o][r], False)
             if self.game.test() is True:
-                print_("You solved the puzzle.")
+                print("You solved the puzzle.")
                 self.game.grid.print_grid()
                 self.game.grid.print_orientations()
                 self.game.win.set_title(_("CardSort") + ": " +
