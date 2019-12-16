@@ -352,7 +352,7 @@ class Sprite:
                              self.rect[3])
                 cr.fill()
             else:
-                print(('sprite.draw: source not a pixbuf (%s)' % (type(img))))
+                print('sprite.draw: source not a pixbuf (%s)' % (type(img)))
         if len(self.labels) > 0:
             self.draw_label(cr)
 
@@ -464,5 +464,5 @@ class Sprite:
             else:
                 return(-1, -1, -1, -1)
         except IndexError:
-            print(("Index Error: %d %d" % (len(array), offset)))
+            print("Index Error: %d %d" % (len(array), offset))
             return(-1, -1, -1, -1)
