@@ -51,22 +51,22 @@ class CardSortActivity(activity.Activity):
 
         self.grid2x2 = radio_factory('2x2on',
                                      toolbar_box.toolbar,
-                                     self._grid2x2_cb,
+                                     lambda button : self.resize_grid(2,2),
                                      tooltip=_('2x2'),
                                      group=None)
         self.grid3x2 = radio_factory('3x2on',
                                      toolbar_box.toolbar,
-                                     self._grid3x2_cb,
+                                     lambda button : self.resize_grid(3,2),
                                      tooltip=_('3x2'),
                                      group=self.grid2x2)
         self.grid2x3 = radio_factory('2x3on',
                                      toolbar_box.toolbar,
-                                     self._grid2x3_cb,
+                                     lambda button : self.resize_grid(2,3),
                                      tooltip=_('2x3'),
                                      group=self.grid2x2)
         self.grid3x3 = radio_factory('3x3on',
                                      toolbar_box.toolbar,
-                                     self._grid3x3_cb,
+                                     lambda button : self.resize_grid(3,3),
                                      tooltip=_('3x3'),
                                      group=self.grid2x2)
 
@@ -104,55 +104,25 @@ class CardSortActivity(activity.Activity):
         # Read the mode from the Journal
         try:
             if self.metadata['grid'] == '2x2':
-                self.show_grid2x2()
+                self.resize_grid(2,2)
             elif self.metadata['grid'] == '3x2':
-                self.show_grid3x2()
+                self.resize_grid(3,2)
             elif self.metadata['grid'] == '2x3':
-                self.show_grid2x3()
+                self.resize_grid(2,3)
             elif self.metadata['grid'] == '3x3':
-                self.show_grid3x3()
+                self.resize_grid(3,3)
         except:
             self.metadata['grid'] = "2x2"
-            self.show_grid2x2()
+            self.resize_grid(2,2)
 
     #
     # Grid resize callbacks
     #
-    def _grid2x2_cb(self, button):
-        self.show_grid2x2()
+    def resize_grid(self, rows, cols):
+        self.game.grid.grid_size = [rows, cols]
+        self.game.grid.reset_game(self.game)
+        self.metadata['grid'] = f"{rows}x{cols}"
         return True
-
-    def show_grid2x2(self):
-        self.game.test = self.game.grid.test2x2
-        self.game.grid.reset2x2(self.game)
-        self.metadata['grid'] = "2x2"
-
-    def _grid3x2_cb(self, button):
-        self.show_grid3x2()
-        return True
-
-    def show_grid3x2(self):
-        self.game.test = self.game.grid.test3x2
-        self.game.grid.reset3x2(self.game)
-        self.metadata['grid'] = "3x2"
-
-    def _grid2x3_cb(self, button):
-        self.show_grid2x3()
-        return True
-
-    def show_grid2x3(self):
-        self.game.test = self.game.grid.test2x3
-        self.game.grid.reset2x3(self.game)
-        self.metadata['grid'] = "2x3"
-
-    def _grid3x3_cb(self, button):
-        self.show_grid3x3()
-        return True
-
-    def show_grid3x3(self):
-        self.game.test = self.game.grid.test3x3
-        self.game.grid.reset3x3(self.game)
-        self.metadata['grid'] = "3x3"
 
     """
     Write the grid status to the Journal

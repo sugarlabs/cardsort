@@ -39,6 +39,7 @@ class Grid:
     """
     def __init__(self, game):
         self.grid = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+        self.grid_size = [2,2] # 2xx2
         self.card_table = []
         self.mask_table = []
         # Stuff to keep around for the graphics
@@ -118,65 +119,51 @@ class Grid:
             i.hide()
 
     # Reset everything to initial layout
-    def reset3x3(self, game):
+    def reset_game(self, game):
         self.show_all()
         self.hide_masks()
-        self.set_grid([0, 1, 2, 3, 4, 5, 6, 7, 8])
         self.randomize_orientation()
-        self.hide_masks()
-        self.test3x3()
 
-    # Two by two = ((7, 5, 0, 3), (7, 4, 5, 2), (1, 3, 5, 8), (4, 5, 6, 1))
-    def reset2x2(self, game):
-        self.show_all()
-        self.hide_masks()
-        self.randomize_orientation()
-        r = int(uniform(0, 4))
-        if r == 0:
-            self.set_grid([7, 5, 1, 0, 3, 2, 4, 6, 8])
-            self.hide_list([1, 2, 4, 6, 8])
-        elif r == 1:
-            self.set_grid([7, 4, 1, 5, 2, 3, 0, 6, 8])
-            self.hide_list([0, 1, 3, 6, 8])
-        elif r == 2:
-            self.set_grid([1, 3, 2, 5, 8, 4, 6, 7, 0])
-            self.hide_list([2, 4, 6, 7, 0])
-        else:
-            self.set_grid([4, 5, 0, 6, 1, 2, 3, 7, 8])
-            self.hide_list([0, 2, 3, 7, 8])
-        self.hide_masks()
-        self.test2x2()
+        orientation = f"{self.grid_size[0]}x{self.grid_size[1]}"
 
-    # Three by two = ((7, 5, 0, 2, 4, 3), (5, 6, 1, 4, 3, 8))
-    def reset3x2(self, game):
-        self.show_all()
-        self.hide_masks()
-        self.randomize_orientation()
-        r = int(uniform(0, 2))
-        if r == 0:
-            self.set_grid([7, 5, 0, 2, 4, 3, 1, 6, 8])
-            self.hide_list([1, 6, 8])
-        else:
-            self.set_grid([5, 6, 1, 4, 3, 8, 0, 2, 7])
-            self.hide_list([0, 2, 7])
-        self.hide_masks()
-        self.test3x2()
+        if orientation == "3x3":
+            self.set_grid([0, 1, 2, 3, 4, 5, 6, 7, 8])
+        
+        elif orientation == "2x2":
+            r = int(uniform(0, 4))
+            if r == 0:
+                self.set_grid([7, 5, 1, 0, 3, 2, 4, 6, 8])
+                self.hide_list([1, 2, 4, 6, 8])
+            elif r == 1:
+                self.set_grid([7, 4, 1, 5, 2, 3, 0, 6, 8])
+                self.hide_list([0, 1, 3, 6, 8])
+            elif r == 2:
+                self.set_grid([1, 3, 2, 5, 8, 4, 6, 7, 0])
+                self.hide_list([2, 4, 6, 7, 0])
+            else:
+                self.set_grid([4, 5, 0, 6, 1, 2, 3, 7, 8])
+                self.hide_list([0, 2, 3, 7, 8])
 
-    # Two by three = ((5, 2, 4, 6, 1, 7), (7, 1, 2, 5, 8, 0))
-    # reset everything to initial layout
-    def reset2x3(self, game):
-        self.show_all()
+        elif orientation == "3x2":
+            r = int(uniform(0, 2))
+            if r == 0:
+                self.set_grid([7, 5, 0, 2, 4, 3, 1, 6, 8])
+                self.hide_list([1, 6, 8])
+            else:
+                self.set_grid([5, 6, 1, 4, 3, 8, 0, 2, 7])
+                self.hide_list([0, 2, 7])
+
+        elif orientation == "2x3":
+            r = int(uniform(0, 2))
+            if r == 0:
+                self.set_grid([5, 2, 0, 4, 6, 3, 1, 7, 8])
+                self.hide_list([0, 3, 8])
+            else:
+                self.set_grid([7, 1, 3, 2, 5, 4, 8, 0, 6])
+                self.hide_list([3, 4, 6])
+                
         self.hide_masks()
-        self.randomize_orientation()
-        r = int(uniform(0, 2))
-        if r == 0:
-            self.set_grid([5, 2, 0, 4, 6, 3, 1, 7, 8])
-            self.hide_list([0, 3, 8])
-        else:
-            self.set_grid([7, 1, 3, 2, 5, 4, 8, 0, 6])
-            self.hide_list([3, 4, 6])
-        self.hide_masks()
-        self.test2x3()
+        self.test()
 
     # swap card a and card b
     # swap their entries in the grid and the position of their sprites
@@ -214,6 +201,20 @@ class Grid:
 
     # Test all relevant borders, ignoring edges
     # Highlight matches.
+    def test(self):
+        orientation = f"{self.grid_size[0]}x{self.grid_size[1]}"
+
+        if orientation == "3x3":
+            return self.test3x3()
+        elif orientation == "2x3":
+            return self.test2x3()
+        elif orientation == "3x2":
+            return self.test3x2()
+        elif orientation == "2x2":
+            return self.test2x2()
+        
+        return False
+
     def test3x3(self):
         for m, i in enumerate([0, 1, 3, 4, 6, 7]):
             offset = abs(self.card_table[self.grid[i]].east)
