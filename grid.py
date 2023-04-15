@@ -42,6 +42,7 @@ class Grid:
         self.grid_size = [2,2] # 2xx2
         self.card_table = []
         self.mask_table = []
+        self.game = game
         # Stuff to keep around for the graphics
         self.w = int(game.width)
         self.h = int(game.height)
@@ -71,24 +72,24 @@ class Grid:
 
     # Utility functions
     def i_to_xy(self, i):
-        return int((self.w - (self.d * 3)) / 2) + (i % 3) * self.d, \
-            int((self.h - (self.d * 3)) / 2) + int(i / 3) * self.d
+        return int((self.w - (self.d * self.grid_size[0])) / 2) + (i % 3) * self.d, \
+            int((self.h - (self.d * self.grid_size[1])) / 2) + int(i / 3) * self.d
 
     def mh_to_xy(self, i):
-        return int((self.w - (self.d * 3)) / 2 +
+        return int((self.w - (self.d * self.grid_size[0])) / 2 +
                    ((i % 2) + 1) * self.d - 60 * self.s), \
-            int((self.h - (self.d * 3)) / 2 +
+            int((self.h - (self.d * self.grid_size[1])) / 2 +
                 (int(i / 2) + .5) * self.d - 24 * self.s)
 
     def mv_to_xy(self, i):
-        return int((self.w - (self.d * 3)) / 2 +
+        return int((self.w - (self.d * self.grid_size[0])) / 2 +
                    ((i % 3) + .5) * self.d - 24 * self.s), \
-            int((self.h - (self.d * 3)) / 2 +
+            int((self.h - (self.d * self.grid_size[1])) / 2 +
                 (int(i / 3) + 1) * self.d - 60 * self.s)
 
     def xy_to_i(self, x, y):
-        return (x - int((self.w - (self.d * 3)) / 2)) / self.d + \
-               ((y - int((self.h - (self.d * 3)) / 2)) / self.d) * 3
+        return (x - int((self.w - (self.d * self.grid_size[0])) / 2)) / self.d + \
+               ((y - int((self.h - (self.d * self.grid_size[1])) / 2)) / self.d) * 3
 
     def set_orientation(self, neworientation, draw_card=True):
         for c in range(9):
@@ -105,6 +106,24 @@ class Grid:
             x, y = self.i_to_xy(i)
             self.card_table[c].spr.move((x, y))
             self.grid[i] = c
+
+    def set_grid_size(self, rows, cols):
+        self.hide_masks()
+        self.grid_size = [rows, cols]
+        self.mask_table = []
+        for i in range(4):
+            bitmap = load_image(
+                os.path.join(self.game.path, 'mask%dh.svg' % (i)),
+                120 * self.game.scale, 48 * self.game.scale)
+            for j in range(6):
+                x, y = self.mh_to_xy(j)
+                self.mask_table.append(Sprite(self.game.sprites, x, y, bitmap))
+            bitmap = load_image(
+                os.path.join(self.game.path, 'mask%dv.svg' % (i)),
+                48 * self.game.scale, 120 * self.game.scale)
+            for j in range(6):
+                x, y = self.mv_to_xy(j)
+                self.mask_table.append(Sprite(self.game.sprites, x, y, bitmap))
 
     def show_all(self):
         for i in range(9):

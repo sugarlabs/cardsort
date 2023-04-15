@@ -119,7 +119,7 @@ class CardSortActivity(activity.Activity):
     # Grid resize callbacks
     #
     def resize_grid(self, rows, cols):
-        self.game.grid.grid_size = [rows, cols]
+        self.game.grid.set_grid_size(rows, cols)
         self.game.grid.reset_game(self.game)
         self.metadata['grid'] = f"{rows}x{cols}"
         return True
