@@ -31,6 +31,16 @@ def load_image(file, w, h):
 # class for defining individual cards
 #
 class Card:
+    SUITS = {
+        1: "Spade",
+        -1: "Spade",
+        2: "Heart",
+        -2: "Heart",
+        3: "Club",
+        -3: "Club",
+        4: "Diamond",
+        -4: "Diamond"
+    }
     # Spade   = 1,-1
     # Heart   = 2,-2
     # Club    = 3,-3
@@ -50,6 +60,25 @@ class Card:
         # create sprite from svg file
         self.spr = Sprite(game.sprites, x, y, self.images[0])
         self.spr.set_label(i)
+        self.suit = Card.SUITS[c.index(max(c))]
+        self.value = max(c)
+        self.face_up = False
+    def flip(self):
+        if self.face_up:
+            self.set_face_down()
+        else:
+            self.set_face_up()
+    def set_face_down(self):
+        if self.face_up:
+            self.face_up = False
+            self.spr.set_shape(self.images[0])
+            self.spr.hide_label()
+
+    def set_face_up(self):
+        if not self.face_up:
+            self.face_up = True
+            self.spr.set_shape(self.images[int(self.orientation / 90)])
+            self.spr.show_label()
 
     def reset_image(self, game, i):
         while self.orientation != 0:
@@ -69,11 +98,12 @@ class Card:
         self.orientation += 90
         if self.orientation == 360:
             self.orientation = 0
-        if rotate_spr is True:
-            self.spr.set_shape(self.images[int(self.orientation / 90)])
+        if rotate_spr:
+            if self.face_up:
+                self.spr.set_shape(self.images[int(self.orientation / 90)])
+            else:
+                self.spr.set_shape(self.images[0])
 
     def print_card(self):
-        print("(" + str(self.north) + "," + str(self.east) + \
-              "," + str(self.south) + "," + str(self.west) + \
-              ") " + str(self.rotate) + "ccw" + \
-              " x:" + str(self.spr.x) + " y:" + str(self.spr.y))
+        print(f"{self.value} of {self.suit} with orientation {self.orientation} at position ({self.spr.x}, {self.spr.y})")
+       
