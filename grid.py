@@ -220,7 +220,7 @@ class Grid:
 
     # Test all relevant borders, ignoring edges
     # Highlight matches.
-    def test(self):
+    def test_borders(self):
         orientation = f"{self.grid_size[0]}x{self.grid_size[1]}"
 
         if orientation == "3x3":
