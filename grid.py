@@ -147,7 +147,7 @@ class Grid:
 
         if orientation == "3x3":
             self.set_grid([0, 1, 2, 3, 4, 5, 6, 7, 8])
-        
+
         elif orientation == "2x2":
             r = int(uniform(0, 4))
             if r == 0:
@@ -180,9 +180,9 @@ class Grid:
             else:
                 self.set_grid([7, 1, 3, 2, 5, 4, 8, 0, 6])
                 self.hide_list([3, 4, 6])
-                
+
         self.hide_masks()
-        self.test()
+        self.test_borders()
 
     # swap card a and card b
     # swap their entries in the grid and the position of their sprites
@@ -231,7 +231,7 @@ class Grid:
             return self.test3x2()
         elif orientation == "2x2":
             return self.test2x2()
-        
+
         return False
 
     def test3x3(self):
