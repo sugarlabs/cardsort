@@ -114,7 +114,7 @@ class Game():
             # self.grid.print_grid()
         self.press = -1
         self.release = -1
-        if self.grid.test() is True:
+        if self.grid.test_borders() is True:
             if self.sugar is True:
                 self.activity.results_label.set_text(
                     _("You solved the puzzle."))
